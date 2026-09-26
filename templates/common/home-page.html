@@ -1,10 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'shared/base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block title %}Home - Journeylog{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="container hero-container">
+        <h1 class="hero-title">Your Ultimate Travel Companion</h1>
+        <p class="hero-subtitle">Plan trips, track activities, organize packing lists, and chronicle your journeys.</p>
+        <a href="{% url 'trips:add' %}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Create New Trip</a>
+    </div>
+</section>
+
+<!-- Main Dashboard Section -->
+<section class="dashboard-section container">
+    <div class="section-header">
+        <h2>Explore Journeys</h2>
+    </div>
+
+    <!-- Filter & Sort Bar -->
+    <form method="get" class="filter-card">
+        <div class="filter-group">
+            <label for="status">Filter Status:</label>
+            <select name="status" id="status" onchange="this.form.submit()">
+                <option value="">All Statuses</option>
+                <option value="PLANNED" {% if selected_status == 'PLANNED' %}selected{% endif %}>Planned</option>
+                <option value="ONGOING" {% if selected_status == 'ONGOING' %}selected{% endif %}>Ongoing</option>
+                <option value="COMPLETED" {% if selected_status == 'COMPLETED' %}selected{% endif %}>Completed</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="sort">Sort By:</label>
+            <select name="sort" id="sort" onchange="this.form.submit()">
+                <option value="start_date" {% if selected_sort == 'start_date' %}selected{% endif %}>Start Date (Asc)</option>
+                <option value="-start_date" {% if selected_sort == '-start_date' %}selected{% endif %}>Start Date (Desc)</option>
+                <option value="budget" {% if selected_sort == 'budget' %}selected{% endif %}>Budget (Low-High)</option>
+                <option value="-budget" {% if selected_sort == '-budget' %}selected{% endif %}>Budget (High-Low)</option>
+            </select>
+        </div>
+
+        <div class="filter-group reset-group">
+            <a href="{% url 'common:home' %}" class="btn btn-secondary">Reset Filters</a>
+        </div>
+    </form>
+
+    <!-- Trips Grid -->
+    {% if trips %}
+        <div class="trips-grid">
+            {% for trip in trips %}
+                <div class="trip-card">
+                    <div class="trip-card-image" style="background-image: url('{{ trip.destination.image_url|default:'/static/images/default-trip.jpg' }}');">
+                        <span class="badge status-{{ trip.status|lower }}">{{ trip.get_status_display }}</span>
+                    </div>
+                    <div class="trip-card-body">
+                        <h3 class="trip-title">{{ trip.title }}</h3>
+                        <p class="trip-destination"><i class="fa-solid fa-location-dot"></i> {{ trip.destination.name }}, {{ trip.destination.country }}</p>
+                        <div class="trip-meta">
+                            <span><i class="fa-regular fa-calendar"></i> {{ trip.start_date|date:"M d, Y" }}</span>
+                            <span><i class="fa-solid fa-coins"></i> ${{ trip.budget }}</span>
+                        </div>
+                        <a href="{% url 'trips:details' trip.pk %}" class="btn btn-card">View Journey</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <i class="fa-solid fa-map-location-dot empty-icon"></i>
+            <h3>No Journeys Found</h3>
+            <p>Start your adventure by creating your first trip itinerary!</p>
+            <a href="{% url 'trips:add' %}" class="btn btn-primary">Add a Trip</a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

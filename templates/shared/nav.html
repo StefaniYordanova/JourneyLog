@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% load static %}
+<header class="site-header">
+    <nav class="navbar container">
+        <a href="{% url 'common:home' %}" class="nav-brand">
+            Journeylog
+        </a>
+        <ul class="nav-menu">
+            <li><a href="{% url 'common:home' %}" class="nav-link">Home</a></li>
+            <li><a href="{% url 'trips:add' %}" class="nav-link">Add Trip</a></li>
+            <li><a href="{% url 'destinations:add' %}" class="nav-link">Add Destination</a></li>
+            <li><a href="{% url 'travel_notes:add' %}" class="nav-link">Add Note</a></li>
+        </ul>
+    </nav>
+</header>
