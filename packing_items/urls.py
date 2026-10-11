@@ -1,7 +1,7 @@
 from django.urls import path
-from packing_lists import views
+from packing_items import views
 
-app_name = 'packing_lists'
+app_name = 'packing_items'
 
 urlpatterns = [
     path('add-item/', views.add_item, name='add'),

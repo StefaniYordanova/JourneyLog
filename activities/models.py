@@ -1,12 +1,22 @@
 from django.db import models
+from JourneyLog.mixins import TitleMixin
+
 
 # Create your models here.
 
-class Activity(models.Model):
-    class Category(models.TextChoices):
-        SIGHTSEEING ='SIGHTSEEING', 'Sightseeing & Attractions'
-        FOOD = 'FOOD', 'Food & Dining'
-        ADVENTURE ='ADVENTURE', 'Outdoor & Adventure'
-        CULTURE ='CULTURE', 'Art, History & Culture'
-        RELAXATION ='RELAXATION', 'Relaxation & Leisure'
+class Activity(TitleMixin):
+    date_and_time = models.DateTimeField()
+    location = models.CharField(
+        max_length=100,
+    )
+    trip = models.ForeignKey(
+        to='trips.Trip',
+        on_delete=models.CASCADE,
+        related_name='activities',
+    )
+    is_completed = models.BooleanField(
+        default=False,
+    )
 
+    def __str__(self) -> str:
+        return f"{self.title}"
