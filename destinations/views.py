@@ -6,11 +6,14 @@ from django.shortcuts import render
 def add_destination(request: HttpRequest) -> HttpResponse:
     return render(request, 'destinations/destination-add-page.html')
 
-def edit_destination(request: HttpRequest, pk: int) -> HttpResponse:
+def edit_destination(request: HttpRequest, slug: slug) -> HttpResponse:
     return render(request, 'destinations/destination-edit-page.html')
 
-def delete_destination(request: HttpRequest, pk: int) -> HttpResponse:
+def delete_destination(request: HttpRequest, slug: slug) -> HttpResponse:
     return render(request, 'destinations/destination-delete-page.html')
 
-def details_destination(request: HttpRequest, pk: int) -> HttpResponse:
+def details_destination(request: HttpRequest, slug: slug) -> HttpResponse:
     return render(request, 'destinations/destination-details-page.html')
+
+def list_destinations(request: HttpRequest) -> HttpResponse:
+    return render(request, 'destinations/destination-list-page.html')

@@ -2,25 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4beb3558-e269-4f8c-932f-a0de165560bc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JourneyLog/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/JourneyLog/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JourneyLog/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/JourneyLog/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/activities/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/activities/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/destinations/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/destinations/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packing_lists/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/packing_items/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packing_lists/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/packing_items/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packing_lists/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/packing_items/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packing_lists/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/packing_items/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packing_lists/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/packing_items/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packing_lists/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/packing_items/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packing_lists/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/packing_items/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packing_lists/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/packing_items/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/home.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/travel_notes/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/travel_notes/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trips/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/trips/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activities/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/activities/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activities/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/activities/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/destinations/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/destinations/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/destinations/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/destinations/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/common/home-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/common/home-page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/shared/nav.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shared/nav.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trips/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/trips/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trips/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/trips/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,9 +22,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="CSS File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -87,7 +79,7 @@
       <workItem from="1790423156683" duration="9757000" />
       <workItem from="1791394904720" duration="693000" />
       <workItem from="1791648358751" duration="2204000" />
-      <workItem from="1791719399018" duration="1453000" />
+      <workItem from="1791719399018" duration="5635000" />
     </task>
     <servers />
   </component>

@@ -6,6 +6,9 @@ from django.shortcuts import render
 def add_activity(request: HttpRequest) -> HttpResponse:
     return render(request, 'activities/activity-add-page.html')
 
+def edit_activity(request: HttpRequest, pk: int) -> HttpResponse:
+    return render(request, 'activities/activity-edit-page.html')
+
 def delete_activity(request: HttpRequest, pk: int) -> HttpResponse:
     return render(request, 'activities/activity-delete-page.html')
 
