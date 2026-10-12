@@ -1,10 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'shared/base.html' %}
 
-</body>
-</html>
+{% block title %}
+    Delete Destination | Journeylog
+{% endblock %}
+
+{% block content %}
+
+<section class="form-page destination-form-page">
+    <div class="form-container destination-form-container" style="border-color: rgba(239, 68, 68, 0.3);">
+        <div class="form-header destination-form-header">
+
+            <span class="section-label" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); color: #fca5a5;">
+                ⚠️ CONFIRM DELETION
+            </span>
+
+            <h1>Delete Destination</h1>
+
+            <p>
+                Are you sure you want to delete <strong>{{ form.instance.name }}</strong>? This action cannot be undone and will remove it from your travel log.
+            </p>
+
+        </div>
+
+        <form method="post" class="styled-form destination-delete-form">
+            {% csrf_token %}
+            <div style="pointer-events: none; opacity: 0.85;">
+
+                {% for field in form %}
+                    {% if field.name != 'image_file' and field.name != 'image_url' and field.name != 'image' %}
+                        <p>
+                            {{ field.label_tag }}
+                            {{ field }}
+                        </p>
+                    {% endif %}
+                {% endfor %}
+
+                {% if form.instance.image_file or form.instance.image_url %}
+                    <div class="upload-options-container">
+                        <span class="upload-title">📸 Destination Image</span>
+
+                        {% if form.instance.image_file %}
+                            <div class="file-input-group">
+                                <label>Image file:</label>
+                                <div class="file-input-wrapper">
+                                    <span class="btn-upload-label">
+                                        📁 File Uploaded
+                                    </span>
+                                    <span class="file-chosen-text">
+                                        {{ form.instance.image_file.name }}
+                                    </span>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if form.instance.image_url %}
+                            <p style="margin-bottom: 0;">
+                                {{ form.image_url.label_tag }}
+                                {{ form.image_url }}
+                            </p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <div class="form-actions destination-form-actions" style="margin-top: 2rem;">
+                <button type="submit" class="btn" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4); flex: 1; text-align: center;">
+                    Delete Destination
+                </button>
+
+                <a href="{% url 'destinations:list' %}" class="btn btn-outline" style="flex: 1; text-align: center;">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+</section>
+
+{% endblock %}

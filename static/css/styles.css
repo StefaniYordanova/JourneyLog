@@ -196,3 +196,226 @@ body::before {
     color: #c084fc; /* Purple hover accent */
     transform: translateY(-2px);
 }
+
+/* Destination / General Form Page Styling */
+.form-page {
+    max-width: 650px;
+    margin: 2rem auto 4rem auto;
+}
+
+.form-container {
+    background: var(--card-bg, rgba(20, 14, 35, 0.62));
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid var(--card-border, rgba(255, 255, 255, 0.15));
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    color: var(--text-main, #f3f4f6);
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1.2rem;
+    background: rgba(192, 132, 252, 0.15);
+    border: 1px solid rgba(192, 132, 252, 0.3);
+    border-radius: 50px;
+    color: #e9d5ff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.form-header h1 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    background: linear-gradient(135deg, #ffffff 30%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.form-header p {
+    color: var(--text-muted, #cbd5e1);
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* Django Form Fields Styling inside <p> */
+.styled-form p {
+    margin-bottom: 1.25rem;
+}
+
+.styled-form label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-muted, #cbd5e1);
+    margin-bottom: 0.5rem;
+}
+
+.styled-form input[type="text"],
+.styled-form input[type="password"],
+.styled-form input[type="email"],
+.styled-form input[type="number"],
+.styled-form input[type="date"],
+.styled-form input[type="url"],
+.styled-form select,
+.styled-form textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(15, 10, 30, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.styled-form input:focus,
+.styled-form select:focus,
+.styled-form textarea:focus {
+    outline: none;
+    border-color: #c084fc;
+    box-shadow: 0 0 12px rgba(192, 132, 252, 0.3);
+}
+
+/* Form Actions Layout */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    flex: 1;
+    text-align: center;
+}
+
+.btn-outline {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    flex: 1;
+    text-align: center;
+    box-shadow: none;
+}
+
+.btn-outline:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.form-note {
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--text-muted, #cbd5e1);
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+/* Destination Image Upload Container */
+.upload-options-container {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.file-chosen-text {
+    color: var(--text-muted, #cbd5e1);
+    font-size: 0.9rem;
+    font-style: normal; /* Changed from italic to normal */
+}
+
+.upload-title {
+    display: block;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+}
+
+.file-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.file-input-group label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-muted, #cbd5e1);
+}
+
+.file-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.btn-upload-label {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 25px;
+    box-shadow: 0 4px 12px rgba(109, 40, 217, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.3s ease;
+}
+
+.btn-upload-label:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(109, 40, 217, 0.6);
+}
+
+.or-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.25rem 0;
+    color: var(--text-muted, #94a3b8);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.or-divider::before,
+.or-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.or-divider span {
+    padding: 0 1rem;
+}
+
+.btn-primary {
+    font-size: 1.05rem;
+    padding: 0.65rem 1.4rem;
+    letter-spacing: 0.3px;
+}
+

@@ -1,10 +1,86 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'shared/base.html' %}
 
-</body>
-</html>
+{% block title %}
+    Destinations | Journeylog
+{% endblock %}
+
+{% block content %}
+
+<section style="margin-bottom: 3rem;">
+    <div style="text-align: center; margin-bottom: 2.5rem;">
+        <span class="section-label">
+            🌍 EXPLORE THE GLOBE
+        </span>
+        <h1 style="
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin: 0.5rem 0 1rem 0;
+            background: linear-gradient(135deg, #ffffff 30%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        ">
+            All Destinations
+        </h1>
+        <p style="color: var(--text-muted, #cbd5e1); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+            Browse through your saved dream spots, review their details, and plan your next incredible journey.
+        </p>
+    </div>
+
+    {% if destinations %}
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.8rem;">
+            {% for destination in destinations %}
+                <article class="card" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 25px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1)';">
+
+                    <div style="border-radius: 14px; overflow: hidden; margin-bottom: 1.25rem; height: 200px; background: rgba(0, 0, 0, 0.2);">
+                        {% if destination.image_file %}
+                            <img src="{{ destination.image_file.url }}" alt="{{ destination.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        {% elif destination.image_url %}
+                            <img src="{{ destination.image_url }}" alt="{{ destination.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        {% else %}
+                            <img src="https://t4.ftcdn.net/jpg/07/91/22/59/360_F_791225927_caRPPH99D6D1iFonkCRmCGzkJPf36QDw.jpg" alt="Default Destination Cover" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        {% endif %}
+                    </div>
+
+                    <div style="flex-grow: 1; text-align: left;">
+                        <h3 style="font-size: 1.4rem; margin-bottom: 0.3rem; color: #ffffff;">
+                            {{ destination.name }}
+                        </h3>
+
+                        {% if destination.country %}
+                            <p style="margin-bottom: 0.8rem;">
+                                <span style="background: rgba(192, 132, 252, 0.15); color: #e9d5ff; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">
+                                    📍 {{ destination.country }}
+                                </span>
+                            </p>
+                        {% endif %}
+
+                        {% if destination.description %}
+                            <p style="color: var(--text-muted, #cbd5e1); line-height: 1.6; font-size: 0.95rem; margin-bottom: 1.5rem;">
+                                {{ destination.description|truncatewords:10 }}
+                            </p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <a href="{% url 'destinations:details' destination.slug %}" class="btn" style="width: 100%; text-align: center; box-sizing: border-box; display: inline-block;">
+                            View Destination
+                        </a>
+                    </div>
+
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+
+        <div class="card" style="text-align: center; max-width: 500px; margin: 3rem auto; padding: 3rem 2rem;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🗺️</div>
+            <h3 style="color: #ffffff; margin-bottom: 0.5rem; font-size: 1.4rem;">No destinations saved yet</h3>
+            <p style="color: var(--text-muted, #cbd5e1); margin-bottom: 1.8rem;">Start building your travel map by adding your dream destinations!</p>
+            <a href="{% url 'destinations:add' %}" class="btn">
+                + Add Destination
+            </a>
+        </div>
+    {% endif %}
+</section>
+
+{% endblock %}

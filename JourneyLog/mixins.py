@@ -1,5 +1,6 @@
 from django.db import models
 
+# Mixins used for models:
 class CreationTimeStampMixin(models.Model):
     class Meta:
         abstract = True
@@ -23,3 +24,10 @@ class TitleMixin(models.Model):
     title = models.CharField(
         max_length=50,
     )
+
+# Mixins used for forms:
+class DisabledFormFieldsMixin:
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        for name in self.fields:
+            self.fields[name].disabled = True

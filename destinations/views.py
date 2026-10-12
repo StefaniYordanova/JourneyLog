@@ -1,19 +1,54 @@
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import DestinationCreateForm, DestinationDeleteForm
+from .models import Destination
 
 # Create your views here.
 
 def add_destination(request: HttpRequest) -> HttpResponse:
-    return render(request, 'destinations/destination-add-page.html')
+    form = DestinationCreateForm(request.POST or None, request.FILES or None)
+
+    if form.is_valid():
+        form.save()
+        return redirect('destinations:list')
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'destinations/destination-add-page.html', context)
 
 def edit_destination(request: HttpRequest, slug: slug) -> HttpResponse:
     return render(request, 'destinations/destination-edit-page.html')
 
 def delete_destination(request: HttpRequest, slug: slug) -> HttpResponse:
-    return render(request, 'destinations/destination-delete-page.html')
+    destination = get_object_or_404(Destination, slug=slug)
+    form = DestinationDeleteForm(instance=destination)
+
+    if request.method == "POST":
+        destination.delete()
+        return redirect('destinations:list')
+
+    context = {
+        "form": form,
+    }
+
+    return render(request, 'destinations/destination-delete-page.html', context)
 
 def details_destination(request: HttpRequest, slug: slug) -> HttpResponse:
-    return render(request, 'destinations/destination-details-page.html')
+    destination = get_object_or_404(Destination, slug=slug)
+
+    context = {
+        "destination": destination,
+    }
+
+    return render(request, 'destinations/destination-details-page.html', context)
 
 def list_destinations(request: HttpRequest) -> HttpResponse:
-    return render(request, 'destinations/destination-list-page.html')
+    all_destinations = Destination.objects.order_by('-created_at')
+
+    context = {
+        "destinations": all_destinations,
+    }
+
+    return render(request, 'destinations/destination-list-page.html', context)
