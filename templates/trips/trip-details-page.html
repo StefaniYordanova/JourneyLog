@@ -1,10 +1,189 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'shared/base.html' %}
 
-</body>
-</html>
+{% block title %}
+    {{ trip.name }} | Journeylog
+{% endblock %}
+
+{% block content %}
+
+<div class="card" style="
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+    align-items: center;
+    max-width: 950px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+">
+    
+    <div style="border-radius: 16px; overflow: hidden; height: 350px; background: rgba(0, 0, 0, 0.2);">
+        {% if trip.destination.image_file %}
+            <img src="{{ trip.destination.image_file.url }}" alt="{{ trip.destination.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        {% elif trip.destination.image_url %}
+            <img src="{{ trip.destination.image_url }}" alt="{{ trip.destination.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        {% else %}
+            <img src="https://t4.ftcdn.net/jpg/07/91/22/59/360_F_791225927_caRPPH99D6D1iFonkCRmCGzkJPf36QDw.jpg" alt="Default Trip Cover" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        {% endif %}
+    </div>
+
+    <!-- Trip Information Column -->
+    <div style="display: flex; flex-direction: column; justify-content: center;">
+
+        <span class="section-label" style="align-self: flex-start; margin-bottom: 0.75rem;">
+            ✈️ TRIP ITINERARY
+        </span>
+
+        <h1 style="font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 800; color: #ffffff; margin-bottom: 0.5rem; line-height: 1.1;">
+            {{ trip.name }}
+        </h1>
+
+        {% if trip.destination %}
+            <p style="margin-bottom: 1rem; color: #e9d5ff; font-weight: 600; font-size: 1.05rem;">
+                📍 Destination: <span style="color: #ffffff;">{{ trip.destination.name }}</span> ({{ trip.destination.country }})
+            </p>
+        {% endif %}
+
+        <!-- Attributes Badge Group -->
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.25rem;">
+            <span style="background: rgba(192, 132, 252, 0.15); color: #e9d5ff; padding: 0.3rem 0.9rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">
+                📅 {{ trip.start_date }} — {{ trip.end_date }}
+            </span>
+
+            {% if trip.travelers_count %}
+                <span style="background: rgba(255, 255, 255, 0.08); color: #cbd5e1; padding: 0.3rem 0.9rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">
+                    👥 {{ trip.travelers_count }} Travelers
+                </span>
+            {% endif %}
+
+            {% if trip.travel_style %}
+                <span style="background: rgba(255, 255, 255, 0.08); color: #cbd5e1; padding: 0.3rem 0.9rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">
+                    🎒 Style: {{ trip.travel_style }}
+                </span>
+            {% endif %}
+        </div>
+
+        <!-- Completion Status -->
+        <div style="margin-bottom: 1.5rem;">
+            {% if trip.is_completed %}
+                <span style="background: rgba(34, 197, 94, 0.15); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.3); padding: 0.35rem 0.9rem; border-radius: 20px; font-weight: 700; font-size: 0.85rem;">
+                    ✅ Completed Trip
+                </span>
+            {% else %}
+                <span style="background: rgba(192, 132, 252, 0.15); color: #e9d5ff; border: 1px solid rgba(192, 132, 252, 0.3); padding: 0.35rem 0.9rem; border-radius: 20px; font-weight: 700; font-size: 0.85rem;">
+                    ⏳ Upcoming Adventure
+                </span>
+            {% endif %}
+        </div>
+
+        {% if trip.description %}
+            <div style="color: var(--text-muted, #cbd5e1); line-height: 1.6; font-size: 1rem; margin-bottom: 1.5rem;">
+                <p style="margin: 0;">{{ trip.description }}</p>
+            </div>
+        {% endif %}
+
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="{% url 'trips:edit' trip.pk %}" class="btn">
+                Edit Trip
+            </a>
+            <a href="{% url 'trips:delete' trip.pk %}" class="btn" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);">
+                Delete
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- PREFETCHED SECTIONS & ADDITION FORMS CONTAINER -->
+<div style="max-width: 950px; margin: 0 auto 3rem auto; display: flex; flex-direction: column; gap: 2rem;">
+
+    <!-- 1. ACTIVITIES SECTION & FORM -->
+    <div class="card" style="padding: 2rem;">
+        <h3 style="color: #ffffff; font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem;">🎯 Activities</h3>
+        {% if trip.activities.all %}
+            <ul style="margin: 0 0 1.5rem 0; padding-left: 1.2rem; color: var(--text-muted, #cbd5e1); line-height: 1.6;">
+                {% for activity in trip.activities.all %}
+                    <li style="margin-bottom: 0.4rem;">{{ activity.name|default:activity }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p style="color: var(--text-muted, #cbd5e1); font-size: 0.95rem; font-style: italic; margin-bottom: 1.5rem;">No activities added yet.</p>
+        {% endif %}
+
+        <!-- Inline Add Activity Form -->
+        <form method="post" action="{% url 'trips:add_activity' trip.pk %}" class="styled-form" style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1.25rem;">
+            {% csrf_token %}
+            <div style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 220px;">
+                    <label style="font-size: 0.9rem; margin-bottom: 0.4rem; display: block; color: var(--text-muted);">Add New Activity:</label>
+                    <input type="text" name="name" placeholder="e.g. Visit the British Museum" required style="width: 100%; padding: 0.6rem 0.9rem; background: rgba(15, 10, 30, 0.4); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; color: #fff;">
+                </div>
+                <button type="submit" class="btn" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">Add Activity</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- 2. PACKING LIST SECTION & FORM -->
+    <div class="card" style="padding: 2rem;">
+        <h3 style="color: #ffffff; font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem;">🎒 Packing Items</h3>
+        {% if trip.packing_items.all %}
+            <ul style="margin: 0 0 1.5rem 0; padding-left: 1.2rem; color: var(--text-muted, #cbd5e1); line-height: 1.6;">
+                {% for item in trip.packing_items.all %}
+                    <li style="margin-bottom: 0.4rem;">{{ item.name|default:item }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p style="color: var(--text-muted, #cbd5e1); font-size: 0.95rem; font-style: italic; margin-bottom: 1.5rem;">No packing items recorded.</p>
+        {% endif %}
+
+        <!-- Inline Add Packing Item Form -->
+        <form method="post" action="{% url 'trips:add_packing_item' trip.pk %}" class="styled-form" style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1.25rem;">
+            {% csrf_token %}
+            <div style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 220px;">
+                    <label style="font-size: 0.9rem; margin-bottom: 0.4rem; display: block; color: var(--text-muted);">Add Packing Item:</label>
+                    <input type="text" name="name" placeholder="e.g. Universal power adapter" required style="width: 100%; padding: 0.6rem 0.9rem; background: rgba(15, 10, 30, 0.4); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; color: #fff;">
+                </div>
+                <button type="submit" class="btn" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">Add Item</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- 3. TRAVEL NOTES SECTION & FORM -->
+    <div class="card" style="padding: 2rem;">
+        <h3 style="color: #ffffff; font-size: 1.3rem; margin-top: 0; margin-bottom: 1rem;">📝 Travel Notes</h3>
+        {% if trip.travel_notes.all %}
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;">
+                {% for note in trip.travel_notes.all %}
+                    <div style="background: rgba(15, 10, 30, 0.3); padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.05); color: var(--text-muted);">
+                        {{ note.text|default:note }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="color: var(--text-muted, #cbd5e1); font-size: 0.95rem; font-style: italic; margin-bottom: 1.5rem;">No travel notes saved.</p>
+        {% endif %}
+
+        <!-- Inline Add Travel Note Form -->
+        <form method="post" action="{% url 'trips:add_note' trip.pk %}" class="styled-form" style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1.25rem;">
+            {% csrf_token %}
+            <div style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 220px;">
+                    <label style="font-size: 0.9rem; margin-bottom: 0.4rem; display: block; color: var(--text-muted);">Add Travel Note:</label>
+                    <input type="text" name="text" placeholder="e.g. Remember to book tickets online in advance" required style="width: 100%; padding: 0.6rem 0.9rem; background: rgba(15, 10, 30, 0.4); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; color: #fff;">
+                </div>
+                <button type="submit" class="btn" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">Save Note</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<!-- Back Navigation -->
+<div style="max-width: 950px; margin: 0 auto 3rem auto;">
+    <a href="{% url 'trips:list' %}" class="btn btn-secondary">
+        ← Back to All Trips
+    </a>
+</div>
+
+{% endblock %}

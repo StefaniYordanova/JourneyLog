@@ -1,3 +1,4 @@
+from django.forms import modelform_factory
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import DestinationCreateForm, DestinationDeleteForm
@@ -19,7 +20,24 @@ def add_destination(request: HttpRequest) -> HttpResponse:
     return render(request, 'destinations/destination-add-page.html', context)
 
 def edit_destination(request: HttpRequest, slug: slug) -> HttpResponse:
-    return render(request, 'destinations/destination-edit-page.html')
+    destination = get_object_or_404(Destination, slug=slug)
+
+    if request.user.is_staff:
+        DestinationEditForm = modelform_factory(Destination, fields="__all__")
+    else:
+        DestinationEditForm = modelform_factory(Destination, exclude=["slug", ])
+
+    form = DestinationEditForm(request.POST or None, request.FILES or None, instance=destination)
+
+    if form.is_valid():
+        form.save()
+        return redirect('destinations:list')
+
+    context = {
+        "form": form,
+    }
+
+    return render(request, 'destinations/destination-edit-page.html', context)
 
 def delete_destination(request: HttpRequest, slug: slug) -> HttpResponse:
     destination = get_object_or_404(Destination, slug=slug)

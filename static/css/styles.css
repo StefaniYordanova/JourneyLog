@@ -419,3 +419,7 @@ body::before {
     letter-spacing: 0.3px;
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
