@@ -32,5 +32,5 @@ class Trip(TitleMixin, CreationTimeStampMixin):
         if self.start_date and self.end_date:
             if self.end_date <= self.start_date:
                 raise ValidationError(
-                    "End date must be after the start date!"
+                    {'end_date': "The end date must be after the start date.", }
                 )

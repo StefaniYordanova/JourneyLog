@@ -81,7 +81,7 @@
         <div style="display: flex; flex-direction: column; gap: 0.75rem;">
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
                 <a href="{% url 'trips:edit' trip.pk %}" class="btn" style="flex: 1; text-align: center;">
-                    Edit Trip
+                    Edit Trip Details
                 </a>
                 <a href="{% url 'trips:delete' trip.pk %}" class="btn" style="flex: 1; text-align: center; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);">
                     Delete
@@ -101,7 +101,7 @@
 
 <div style="max-width: 950px; margin: 0 auto 3rem auto; display: flex; flex-direction: column; gap: 2rem;">
 
-    <!-- 1. ACTIVITIES CARD -->
+    <!-- 1. ACTIVITIES -->
     <div class="card" style="padding: 2rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
             <h3 style="color: #ffffff; font-size: 1.3rem; margin: 0;">🎯 Activities</h3>
@@ -111,41 +111,50 @@
         </div>
 
         {% if trip.activities.all %}
-            <ul style="margin: 0; padding-left: 1.5rem; color: var(--text-muted, #cbd5e1); line-height: 1.8; list-style-type: disc;">
-                {% for activity in trip.activities.all %}
-                    <li style="margin-bottom: 0.4rem; font-size: 1rem;">
-                        {{ activity.name|default:activity }}
-                    </li>
+            <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+                {% for activity in trip.activities.all|dictsort:"date_and_time" %}
+                    <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 1rem 1.25rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease;">
+
+                        <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+                            <h4 style="color: #ffffff; font-size: 1.05rem; margin: 0;">
+                                {{ activity.title }}
+                            </h4>
+                            <p style="color: var(--text-muted, #cbd5e1); font-size: 0.85rem; margin: 0;">
+                                📍 {{ activity.location }} &nbsp;|&nbsp; 📅 {{ activity.date_and_time|date:"d.m.Y, H:i" }}
+                            </p>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            {% if activity.is_completed %}
+                                <span style="background: rgba(34, 197, 94, 0.15); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.3); padding: 0.25rem 0.75rem; border-radius: 12px; font-weight: 600; font-size: 0.8rem; white-space: nowrap;">
+                                    ✅ Completed
+                                </span>
+                            {% else %}
+                                <span style="background: rgba(192, 132, 252, 0.15); color: #e9d5ff; border: 1px solid rgba(192, 132, 252, 0.3); padding: 0.25rem 0.75rem; border-radius: 12px; font-weight: 600; font-size: 0.8rem; white-space: nowrap;">
+                                    ⏳ Pending
+                                </span>
+                            {% endif %}
+
+                            <div style="display: flex; align-items: center; gap: 0.6rem;">
+                                <a href="{% url 'activities:edit' activity.pk %}" title="Edit Activity" style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 0.5rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </a>
+
+                                <a href="{% url 'activities:delete' activity.pk %}" title="Delete Activity" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; padding: 0.5rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
                 {% endfor %}
-            </ul>
+            </div>
         {% else %}
             <p style="color: var(--text-muted, #cbd5e1); font-size: 0.95rem; font-style: italic; margin: 0;">No activities added yet.</p>
         {% endif %}
     </div>
 
-    <!-- 2. PACKING ITEMS CARD -->
-    <div class="card" style="padding: 2rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
-            <h3 style="color: #ffffff; font-size: 1.3rem; margin: 0;">🎒 Packing Items</h3>
-            <a href="{% url 'packing_items:add' %}" class="btn" style="padding: 0.4rem 1rem; font-size: 0.85rem;">
-                + Add Item
-            </a>
-        </div>
-
-        {% if trip.packing_items.all %}
-            <ul style="margin: 0; padding-left: 1.5rem; color: var(--text-muted, #cbd5e1); line-height: 1.8; list-style-type: disc;">
-                {% for item in trip.packing_items.all %}
-                    <li style="margin-bottom: 0.4rem; font-size: 1rem;">
-                        {{ item.name|default:item }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p style="color: var(--text-muted, #cbd5e1); font-size: 0.95rem; font-style: italic; margin: 0;">No packing items recorded.</p>
-        {% endif %}
-    </div>
-
-    <!-- 3. TRAVEL NOTES CARD -->
+    <!-- 2. TRAVEL NOTES -->
     <div class="card" style="padding: 2rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
             <h3 style="color: #ffffff; font-size: 1.3rem; margin: 0;">📝 Travel Notes</h3>
@@ -164,6 +173,28 @@
             </ul>
         {% else %}
             <p style="color: var(--text-muted, #cbd5e1); font-size: 0.95rem; font-style: italic; margin: 0;">No travel notes saved.</p>
+        {% endif %}
+    </div>
+
+    <!-- 3. PACKING ITEMS -->
+    <div class="card" style="padding: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+            <h3 style="color: #ffffff; font-size: 1.3rem; margin: 0;">🎒 Packing Items</h3>
+            <a href="{% url 'packing_items:add' %}" class="btn" style="padding: 0.4rem 1rem; font-size: 0.85rem;">
+                + Add Item
+            </a>
+        </div>
+
+        {% if trip.packing_items.all %}
+            <ul style="margin: 0; padding-left: 1.5rem; color: var(--text-muted, #cbd5e1); line-height: 1.8; list-style-type: disc;">
+                {% for item in trip.packing_items.all %}
+                    <li style="margin-bottom: 0.4rem; font-size: 1rem;">
+                        {{ item.name|default:item }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p style="color: var(--text-muted, #cbd5e1); font-size: 0.95rem; font-style: italic; margin: 0;">No packing items recorded.</p>
         {% endif %}
     </div>
 

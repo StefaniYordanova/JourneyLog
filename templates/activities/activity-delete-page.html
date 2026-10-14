@@ -1,10 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'shared/base.html' %}
 
-</body>
-</html>
+{% block title %}
+Delete Activity | Journeylog
+{% endblock %}
+
+{% block content %}
+
+<section class="form-page activity-form-page">
+    <div class="form-container activity-form-container" style="max-width: 650px; margin: 3rem auto; padding: 2.5rem;">
+        <div class="form-header activity-form-header" style="text-align: center; margin-bottom: 2rem;">
+
+            <span class="section-label" style="color: #ef4444;">
+                ⚠️ CONFIRM DELETION
+            </span>
+
+            <h1 style="font-size: clamp(2rem, 3vw, 2.5rem); font-weight: 800; color: #ffffff; margin: 0.5rem 0 1rem 0;">
+                Delete Activity
+            </h1>
+
+            <p style="color: var(--text-muted, #cbd5e1); font-size: 1rem;">
+                Are you sure you want to delete <strong style="color: #ffffff;">{{ activity.title }}</strong>? This action cannot be undone.
+            </p>
+
+        </div>
+
+        <form method="post" class="styled-form activity-form">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <div class="form-actions activity-form-actions" style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="submit" class="btn" style="flex: 1; text-align: center; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4); color: #ffffff;">
+                    Yes, Delete Activity
+                </button>
+
+                <a href="{% url 'trips:list' %}" class="btn btn-outline" style="flex: 1; text-align: center; display: inline-block;">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+</section>
+
+{% endblock %}
