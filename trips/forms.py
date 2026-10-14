@@ -30,5 +30,5 @@ class TripCreateForm(BaseTripForm):
 class TripEditForm(BaseTripForm):
     ...
 
-class TripDeleteForm(BaseTripForm, DisabledFormFieldsMixin):
+class TripDeleteForm(DisabledFormFieldsMixin, BaseTripForm):
     ...

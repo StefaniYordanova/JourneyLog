@@ -1,10 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'shared/base.html' %}
 
-</body>
-</html>
+{% block title %}
+Edit {{ trip.name }} | Journeylog
+{% endblock %}
+
+{% block content %}
+
+<section class="form-page trip-form-page">
+    <div class="form-container trip-form-container">
+        <div class="form-header trip-form-header">
+
+            <span class="section-label">
+                ✏️ UPDATE ITINERARY
+            </span>
+
+            <h1>Edit Trip: {{ trip.name }}</h1>
+
+            <p>
+                Modify your travel dates, update destination details, or change your itinerary schedule.
+            </p>
+
+        </div>
+
+        <form method="post" class="styled-form trip-form">
+            {% csrf_token %}
+            
+            {{ form.as_p }}
+
+            <div class="form-actions trip-form-actions" style="margin-top: 2rem;">
+                <button type="submit" class="btn btn-primary" style="flex: 1; text-align: center;">
+                    Save Changes
+                </button>
+
+                <a href="{% url 'trips:details' trip.pk %}" class="btn btn-outline" style="flex: 1; text-align: center;">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+</section>
+
+{% endblock %}

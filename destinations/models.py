@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.text import slugify
 from JourneyLog.mixins import CreationTimeStampMixin, NameMixin
@@ -33,3 +34,18 @@ class Destination(NameMixin, CreationTimeStampMixin):
         if not self.slug:
             self.slug = slugify(f"{self.name}-{self.country}")
         super().save(*args, **kwargs)
+
+    def clean(self):
+        super().clean()
+
+        if self.image_url and self.image_file:
+            raise ValidationError({
+                'image_file': "Please provide either the image url or the image file, NOT BOTH!",
+                'image_url': "Please provide either the image url or the image file, NOT BOTH!"
+            })
+
+        if not self.image_url and not self.image_file:
+            raise ValidationError({
+                'image_file': "Please provide either an image url or an image file.",
+                'image_url': "Please provide either an image url or an image file."
+            })
