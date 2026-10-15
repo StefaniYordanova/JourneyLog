@@ -1,10 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'shared/base.html' %}
 
-</body>
-</html>
+{% block title %}
+Add Travel Note | Journeylog
+{% endblock %}
+
+{% block content %}
+
+<section class="form-page note-form-page">
+    <div class="form-container note-form-container" style="max-width: 650px; margin: 3rem auto; padding: 2.5rem;">
+        <div class="form-header note-form-header" style="text-align: center; margin-bottom: 2rem;">
+
+            <span class="section-label">
+                📒 JOURNEY NOTE
+            </span>
+
+            <h1 style="font-size: clamp(2rem, 3vw, 2.5rem); font-weight: 800; color: #ffffff; margin: 0.5rem 0 1rem 0;">
+                Add Travel Note
+            </h1>
+
+            <p style="color: var(--text-muted, #cbd5e1); font-size: 1rem;">
+                Jot down thoughts, reminders, or recommendations for your trip.
+            </p>
+
+        </div>
+
+        <form method="post" class="styled-form note-form">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <div class="form-actions note-form-actions" style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="submit" class="btn btn-primary" style="flex: 1; text-align: center;">
+                    Save Note
+                </button>
+
+                <a href="{% url 'trips:list' %}" class="btn btn-outline" style="flex: 1; text-align: center; display: inline-block;">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+    </div>
+</section>
+
+{% endblock %}

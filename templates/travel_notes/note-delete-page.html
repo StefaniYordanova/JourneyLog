@@ -1,10 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'shared/base.html' %}
 
-</body>
-</html>
+{% block title %}
+Delete Travel Note | Journeylog
+{% endblock %}
+
+{% block content %}
+
+<section class="form-page note-delete-page">
+    <div class="form-container note-delete-container" style="max-width: 650px; margin: 3rem auto; padding: 2.5rem; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(16px); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);">
+        
+        <div class="form-header note-delete-header" style="text-align: center; margin-bottom: 2rem;">
+
+            <span class="section-label" style="background: rgba(43, 33, 67, 0.8); color: #ff4d4d; border: 1.5px solid #6b46c1; padding: 0.45rem 1.4rem; border-radius: 50px; font-weight: 800; font-size: 0.9rem; letter-spacing: 0.08em; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);">
+                ⚠️ CONFIRM DELETION
+            </span>
+
+            <h1 style="font-size: clamp(1.8rem, 3vw, 2.3rem); font-weight: 800; color: #ffffff; margin: 0.75rem 0 0.5rem 0;">
+                Delete Travel Note?
+            </h1>
+
+            <p style="color: var(--text-muted, #cbd5e1); font-size: 1rem; line-height: 1.5;">
+                Are you sure you want to delete this travel note? This action cannot be undone.
+            </p>
+
+        </div>
+
+        <form method="post" class="styled-form note-delete-form">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <div class="form-actions note-delete-actions" style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="submit" class="btn" style="flex: 1; text-align: center; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4); padding: 0.75rem 1rem; font-size: 1rem; font-weight: 600;">
+                    Yes, Delete Note
+                </button>
+
+                <a href="{% url 'trips:details' form.instance.trip.pk %}" class="btn btn-outline" style="flex: 1; text-align: center; display: inline-flex; justify-content: center; align-items: center; padding: 0.75rem 1rem; font-size: 1rem;">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+</section>
+
+{% endblock %}

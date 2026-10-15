@@ -1,4 +1,3 @@
-from django.db.models import Model
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ActivityCreateForm, ActivityEditForm, ActivityDeleteForm

@@ -1,10 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'shared/base.html' %}
 
-</body>
-</html>
+{% block title %}
+Page Not Found | Journeylog
+{% endblock %}
+
+{% block content %}
+
+<section class="error-page" style="display: flex; align-items: center; justify-content: center; min-height: 75vh; padding: 2rem;">
+    <div class="card error-container" style="max-width: 550px; width: 100%; padding: 3rem 2.5rem; text-align: center; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);">
+
+        <span class="section-label" style="background: rgba(192, 132, 252, 0.15); color: #e9d5ff; border: 1px solid rgba(192, 132, 252, 0.3); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 600; font-size: 0.8rem; display: inline-block; margin-bottom: 1.5rem;">
+            🗺️ ERROR 404
+        </span>
+
+        <h1 style="font-size: clamp(3rem, 6vw, 4.5rem); font-weight: 900; color: #ffffff; margin: 0 0 1rem 0; background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            Page Not Found
+        </h1>
+
+        <p style="color: var(--text-muted, #cbd5e1); font-size: 1.05rem; line-height: 1.6; margin: 0 0 2.5rem 0;">
+            Oops! It looks like you've wandered off the map. The page or trip you are looking for doesn't exist or has been moved.
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 1rem;">
+            <a href="{% url 'trips:list' %}" class="btn btn-primary" style="padding: 0.75rem 2rem; font-size: 1rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+                ← Back to Journeys
+            </a>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
