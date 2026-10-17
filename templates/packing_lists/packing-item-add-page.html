@@ -1,10 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'shared/base.html' %}
 
-</body>
-</html>
+{% block title %}
+Add Packing Item | Journeylog
+{% endblock %}
+
+{% block content %}
+<section class="form-page packing-form-page" style="max-width: 600px; margin: 3rem auto; padding: 0 1rem;">
+    <div class="card" style="padding: 2.5rem; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);">
+
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <span class="section-label" style="background: rgba(192, 132, 252, 0.15); color: #e9d5ff; border: 1px solid rgba(192, 132, 252, 0.3); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">
+                🎒 PACKING LIST
+            </span>
+            <h1 style="color: #ffffff; font-size: 2rem; font-weight: 800; margin: 1rem 0 0.5rem 0;">
+                Add Packing Item
+            </h1>
+            <p style="color: var(--text-muted, #cbd5e1); font-size: 0.95rem; margin: 0;">
+                For trip: <strong style="color: #ffffff;">{{ trip.title }}</strong>
+            </p>
+        </div>
+
+        <form method="post" class="styled-form">
+            {% csrf_token %}
+
+            <div style="margin-bottom: 1.5rem;">
+                {{ form.as_p }}
+            </div>
+
+            <!-- Datalist for autocomplete, connected via the id matching the widget attribute -->
+            <datalist id="existing-items-list">
+                {% for item in existing_items %}
+                    <option value="{{ item.name }}">
+                {% endfor %}
+            </datalist>
+
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="submit" class="btn btn-primary" style="flex: 1; padding: 0.6rem 1rem; font-size: 1rem; border-radius: 12px; text-align: center;">
+                    Save Item
+                </button>
+                <a href="{% url 'trips:details' trip.pk %}" class="btn btn-outline" style="flex: 1; padding: 0.6rem 1rem; font-size: 1rem; border-radius: 12px; text-align: center; display: inline-flex; justify-content: center; align-items: center;">
+                    Cancel
+                </a>
+            </div>
+        </form>
+
+    </div>
+</section>
+{% endblock %}

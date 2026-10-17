@@ -4,6 +4,6 @@ from packing_items import views
 app_name = 'packing_items'
 
 urlpatterns = [
-    path('add-item/', views.add_item, name='add'),
-    path('<int:pk>/delete/', views.delete_item, name='delete'),
+    path('add-item/<int:trip_pk>/', views.add_item, name='add'),
+    path('remove-item/<int:trip_pk>/<int:item_pk>/', views.remove_item, name='remove'),
 ]

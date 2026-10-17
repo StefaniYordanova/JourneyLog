@@ -1,0 +1,39 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}
+Remove Packing Item | Journeylog
+{% endblock %}
+
+{% block content %}
+<section class="form-page packing-form-page" style="max-width: 500px; margin: 4rem auto; padding: 0 1rem;">
+    <div class="card" style="padding: 2.5rem; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); text-align: center;">
+
+        <div style="margin-bottom: 1.5rem;">
+            <span style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">
+                ⚠️ REMOVE ITEM
+            </span>
+        </div>
+
+        <h1 style="color: #ffffff; font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem;">
+            Are you sure?
+        </h1>
+        
+        <p style="color: var(--text-muted, #cbd5e1); font-size: 1rem; margin-bottom: 2rem; line-height: 1.5;">
+            Do you want to remove <strong style="color: #ffffff;">{{ item.name }}</strong> from your packing list for <strong style="color: #ffffff;">{{ trip.title }}</strong>?
+        </p>
+
+        <form method="post" style="display: flex; gap: 1rem; justify-content: center;">
+            {% csrf_token %}
+            
+            <button type="submit" class="btn" style="background-color: #ef4444; color: #ffffff; flex: 1; padding: 0.7rem 1rem; font-size: 1rem; border-radius: 12px; border: none; font-weight: 600; cursor: pointer;">
+                Yes, Remove
+            </button>
+            
+            <a href="{% url 'trips:details' trip.pk %}" class="btn btn-outline" style="flex: 1; padding: 0.7rem 1rem; font-size: 1rem; border-radius: 12px; text-align: center; display: inline-flex; justify-content: center; align-items: center; text-decoration: none;">
+                Cancel
+            </a>
+        </form>
+
+    </div>
+</section>
+{% endblock %}
