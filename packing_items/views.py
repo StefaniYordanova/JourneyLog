@@ -48,3 +48,12 @@ def remove_item(request: HttpRequest, trip_pk: int,item_pk: int) -> HttpResponse
     }
 
     return render(request, 'packing_lists/packing-item-remove-page.html', context)
+
+def packing_lists(request: HttpRequest) -> HttpResponse:
+    packing_items = PackingItem.objects.prefetch_related('trips').order_by('-trips__start_date')
+
+    context = {
+        'packing_items': packing_items,
+    }
+
+    return render(request, 'packing_lists/packing-lists-page.html', context)

@@ -50,3 +50,12 @@ def delete_activity(request: HttpRequest, pk: int) -> HttpResponse:
 
     return render(request, 'activities/activity-delete-page.html', context)
 
+def list_activities(request: HttpRequest) -> HttpResponse:
+    activities = Activity.objects.select_related('trip').order_by('-trip__start_date')
+
+    context = {
+        "activities": activities,
+    }
+
+    return render(request, 'activities/activity-list-page.html', context)
+

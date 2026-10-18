@@ -58,3 +58,12 @@ def delete_note(request: HttpRequest, pk: int) -> HttpResponse:
     }
 
     return render(request, 'travel_notes/note-delete-page.html', context)
+
+def list_notes(request: HttpRequest) -> HttpResponse:
+    notes = TravelNote.objects.select_related('trip').order_by('-trip__start_date')
+
+    context = {
+        "notes": notes,
+    }
+
+    return render(request, 'travel_notes/note-list-page.html', context)
