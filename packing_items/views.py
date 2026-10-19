@@ -49,11 +49,16 @@ def remove_item(request: HttpRequest, trip_pk: int,item_pk: int) -> HttpResponse
 
     return render(request, 'packing_lists/packing-item-remove-page.html', context)
 
-def packing_lists(request: HttpRequest) -> HttpResponse:
-    packing_items = PackingItem.objects.prefetch_related('trips').order_by('-trips__start_date')
+
+def packing_lists(request):
+    """
+    In order to display the packing items per trip in the template,
+    I fetch unique trips that have packing items,
+    using distinct() to prevent duplicate entries due to the many-to-many relationship
+    """
+    trips_with_items = Trip.objects.filter(packing_items__isnull=False).distinct()
 
     context = {
-        'packing_items': packing_items,
+        'trips_with_items': trips_with_items,
     }
-
     return render(request, 'packing_lists/packing-lists-page.html', context)
