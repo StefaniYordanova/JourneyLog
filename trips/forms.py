@@ -17,11 +17,17 @@ class BaseTripForm(forms.ModelForm):
             },
         }
         widgets = {
+            'title': forms.TextInput(
+                attrs={'placeholder': 'Enter title...'}
+            ),
             'start_date': forms.DateInput(
-                attrs={'type': 'date', 'placeholder': 'Select start date'}
+                attrs={'type': 'date', }
             ),
             'end_date': forms.DateInput(
-                attrs={'type': 'date', 'placeholder': 'Select end date'}
+                attrs={'type': 'date', }
+            ),
+            'number_of_travelers': forms.NumberInput(
+                attrs={'placeholder': 'Enter number of travelers...'}
             ),
         }
 

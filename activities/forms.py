@@ -10,9 +10,15 @@ class BaseActivityForm(forms.ModelForm):
         model = Activity
         fields = "__all__"
         widgets = {
+            "title": forms.TextInput(
+                attrs={"placeholder": "Enter title..."}
+            ),
             "date_and_time": forms.DateTimeInput(
-                attrs={"type": "datetime-local", "class": "form-control"}
-            )
+                attrs={"type": "datetime-local", "class": "form-control",  }
+            ),
+            "location": forms.TextInput(
+                attrs={"placeholder": "Enter location..."}
+            ),
         }
 
     def clean(self):

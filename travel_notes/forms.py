@@ -7,6 +7,14 @@ class BaseTravelNoteForm(forms.ModelForm):
     class Meta:
         model = TravelNote
         fields = '__all__'
+        widgets = {
+            'title': forms.TextInput(
+                attrs={'placeholder': 'Enter title...'}
+            ),
+            'content': forms.Textarea(
+                attrs={'placeholder': 'Add content...'}
+            ),
+        }
 
 class TravelNoteCreateForm(BaseTravelNoteForm):
     ...

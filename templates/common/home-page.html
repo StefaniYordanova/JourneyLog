@@ -1,4 +1,4 @@
-{% extends 'shared/base.html' %}
+{% extends 'base/base.html' %}
 
 {% block title %}
     Home | Journeylog
@@ -33,7 +33,7 @@
         text-transform: uppercase;
         margin-bottom: 1.5rem;
     ">
-        ✈️ Your Ultimate Travel Journal
+        ✈ Your Ultimate Travel Journal
     </div>
 
     <h1 style="
@@ -63,7 +63,7 @@
 
     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
         <a href="{% url 'trips:list' %}" class="btn">
-            🌍 Explore Trips
+             Explore Trips
         </a>
         <a href="{% url 'trips:add' %}" class="btn btn-secondary">
             + Plan a New Trip
@@ -74,7 +74,7 @@
 
 <section style="max-width: 550px; margin: 0 auto 3rem auto;">
     <h2 style="text-align: center; margin-bottom: 1.8rem; font-size: 1.8rem; letter-spacing: -0.5px;">
-        ✈️ Your upcoming Trip
+         Your upcoming trip:
     </h2>
 
     {% if trip %}
@@ -90,7 +90,7 @@
                 </div>
             {% else %}
                 <div style="border-radius: 12px; overflow: hidden; margin-bottom: 1.2rem; height: 180px; background: rgba(255, 255, 255, 0.05); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-weight: 600;">
-                    🌍 Next Destination Awaits
+                     Next Destination Awaits
                 </div>
             {% endif %}
 
@@ -102,7 +102,7 @@
                 {% if trip.start_date %}
                     <p style="margin-bottom: 0.8rem;">
                         <span style="background: rgba(192, 132, 252, 0.15); color: #e9d5ff; padding: 0.3rem 0.85rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">
-                            📅 Starts: {{ trip.start_date }}
+                            Starts: {{ trip.start_date }}
                         </span>
                     </p>
                 {% endif %}

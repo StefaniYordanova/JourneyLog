@@ -7,6 +7,17 @@ class BaseDestinationForm(forms.ModelForm):
     class Meta:
         model = Destination
         exclude = ['slug', ]
+        widgets = {
+            "name": forms.TextInput(
+                attrs={"placeholder": "Enter name...",}
+            ),
+            "country": forms.TextInput(
+                attrs={"placeholder": "Enter country...", }
+            ),
+            "description": forms.Textarea(
+                attrs={"placeholder": "Add description (optional)...", }
+            )
+        }
 
 class DestinationCreateForm(BaseDestinationForm):
     ...

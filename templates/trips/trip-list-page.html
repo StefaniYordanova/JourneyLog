@@ -1,4 +1,4 @@
-{% extends 'shared/base.html' %}
+{% extends 'base/base.html' %}
 {% load custom_filters %}
 
 {% block title %}
@@ -32,7 +32,7 @@
         <!-- UPCOMING TRIPS SECTION -->
         <div style="margin-bottom: 4.5rem;">
             <h2 style="color: #ffffff; font-size: 1.6rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                ⏳ Upcoming Trips
+                Upcoming Trips:
             </h2>
 
             {% if upcoming_trips %}
@@ -62,7 +62,7 @@
                                     {% endif %}
 
                                     <span style="background: rgba(192, 132, 252, 0.15); color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.3); padding: 0.35rem 0.85rem; border-radius: 12px; font-size: 0.85rem; font-weight: 600; white-space: nowrap;">
-                                        ⏳ {{ trip.start_date|days_left }} days left
+                                         {{ trip.start_date|days_left }} days left
                                     </span>
                                 </div>
 
@@ -72,7 +72,7 @@
 
                                 <p style="margin-bottom: 0.8rem;">
                                     <span style="background: rgba(192, 132, 252, 0.15); color: #e9d5ff; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">
-                                        📅 {{ trip.start_date }} — {{ trip.end_date }}
+                                        {{ trip.start_date }} — {{ trip.end_date }}
                                     </span>
                                 </p>
 
@@ -101,7 +101,7 @@
         <!-- COMPLETED TRIPS SECTION -->
         <div>
             <h2 style="color: #ffffff; font-size: 1.6rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                ✅ Completed Trips
+                Completed Trips:
             </h2>
 
             {% if completed_trips %}
@@ -132,7 +132,7 @@
 
                                 <p style="margin-bottom: 0.8rem;">
                                     <span style="background: rgba(255, 255, 255, 0.08); color: #cbd5e1; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">
-                                        🏁 Finished: {{ trip.end_date }}
+                                        Finished: {{ trip.end_date }}
                                     </span>
                                 </p>
 
