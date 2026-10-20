@@ -3,12 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="4beb3558-e269-4f8c-932f-a0de165560bc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packing_items/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/packing_items/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/common/home-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/common/home-page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/packing_lists/packing-lists-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/packing_lists/packing-lists-page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/travel_notes/note-details-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/travel_notes/note-details-page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/trips/trip-details-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/trips/trip-details-page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/trips/trip-list-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/trips/trip-list-page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activities/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/activities/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/destinations/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/destinations/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/activities/activity-list-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/activities/activity-list-page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/destinations/destination-delete-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/destinations/destination-delete-page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/destinations/destination-edit-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/destinations/destination-edit-page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/shared/nav.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shared/nav.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/travel_notes/note-list-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/travel_notes/note-list-page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trips/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/trips/forms.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +85,8 @@
       <workItem from="1792175093738" duration="733000" />
       <workItem from="1792244320289" duration="6137000" />
       <workItem from="1792349383302" duration="3794000" />
-      <workItem from="1792417125308" duration="5399000" />
+      <workItem from="1792417125308" duration="6865000" />
+      <workItem from="1792502762295" duration="3747000" />
     </task>
     <servers />
   </component>

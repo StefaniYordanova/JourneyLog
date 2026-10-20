@@ -31,10 +31,11 @@ def edit_destination(request: HttpRequest, slug: slug) -> HttpResponse:
 
     if form.is_valid():
         form.save()
-        return redirect('destinations:list')
+        return redirect('destinations:details', slug=destination.slug)
 
     context = {
         "form": form,
+        "destination": destination,
     }
 
     return render(request, 'destinations/destination-edit-page.html', context)
@@ -49,6 +50,7 @@ def delete_destination(request: HttpRequest, slug: slug) -> HttpResponse:
 
     context = {
         "form": form,
+        "destination": destination,
     }
 
     return render(request, 'destinations/destination-delete-page.html', context)
