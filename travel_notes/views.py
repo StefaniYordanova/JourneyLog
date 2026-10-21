@@ -1,69 +1,50 @@
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import reverse
+from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
 from .forms import TravelNoteCreateForm, TravelNoteEditForm, TravelNoteDeleteForm
 from .models import TravelNote
 
-# Create your views here.
+class AddNoteView(CreateView):
+    template_name = 'travel_notes/note-add-page.html'
+    form_class = TravelNoteCreateForm
 
-def add_note(request: HttpRequest) -> HttpResponse:
-    form = TravelNoteCreateForm(request.POST or None)
+    def get_success_url(self):
+        return reverse('trips:details', kwargs={'pk': self.object.trip.pk})
 
-    if form.is_valid():
-        note = form.save()
-        trip_pk = note.trip.pk
-        return redirect('trips:details', pk=trip_pk)
 
-    context = {
-        "form": form,
-    }
+class EditNoteView(UpdateView):
+    model = TravelNote
+    template_name = 'travel_notes/note-edit-page.html'
+    form_class = TravelNoteEditForm
 
-    return render(request, 'travel_notes/note-add-page.html', context)
+    def get_success_url(self):
+        return reverse('trips:details', kwargs={'pk': self.object.trip.pk})
 
-def edit_note(request: HttpRequest, pk: int) -> HttpResponse:
-    note = get_object_or_404(TravelNote, pk=pk)
-    trip_pk = note.trip.pk
-    form = TravelNoteEditForm(request.POST or None, instance=note)
 
-    if form.is_valid():
-        form.save()
-        return redirect('trips:details', pk=trip_pk)
+class DetailNoteView(DetailView):
+    model = TravelNote
+    template_name = 'travel_notes/note-details-page.html'
+    context_object_name = 'note'
 
-    context = {
-        "form": form,
-        "note": note,
-    }
 
-    return render(request, 'travel_notes/note-edit-page.html', context)
+class DeleteNoteView(DeleteView):
+    model = TravelNote
+    template_name = 'travel_notes/note-delete-page.html'
+    form_class = TravelNoteDeleteForm
 
-def details_note(request: HttpRequest, pk: int) -> HttpResponse:
-    note = get_object_or_404(TravelNote, pk=pk)
+    def get_initial(self) -> dict:
+        return self.object.__dict__
 
-    context = {
-        "note": note,
-    }
+    def form_invalid(self, form):
+        return super().form_valid(form)
 
-    return render(request, 'travel_notes/note-details-page.html', context)
+    def get_success_url(self):
+        return reverse('trips:details', kwargs={'pk': self.object.trip.pk})
 
-def delete_note(request: HttpRequest, pk: int) -> HttpResponse:
-    note = get_object_or_404(TravelNote, pk=pk)
-    trip_pk = note.trip.pk
-    form = TravelNoteDeleteForm(instance=note)
 
-    if request.method == "POST":
-        note.delete()
-        return redirect('trips:details', pk=trip_pk)
+class ListNoteView(ListView):
+    model = TravelNote
+    template_name = 'travel_notes/note-list-page.html'
+    context_object_name = 'notes'
 
-    context = {
-        "form": form,
-    }
-
-    return render(request, 'travel_notes/note-delete-page.html', context)
-
-def list_notes(request: HttpRequest) -> HttpResponse:
-    notes = TravelNote.objects.select_related('trip').order_by('-trip__start_date')
-
-    context = {
-        "notes": notes,
-    }
-
-    return render(request, 'travel_notes/note-list-page.html', context)
+    def get_queryset(self):
+        return TravelNote.objects.select_related('trip').order_by('-trip__start_date')

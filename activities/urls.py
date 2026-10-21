@@ -4,10 +4,10 @@ from activities import views
 app_name = 'activities'
 
 urlpatterns = [
-    path('add/', views.add_activity, name='add'),
-    path('list/', views.list_activities, name='list'),
+    path('add/', views.AddActivityView.as_view(), name='add'),
+    path('list/', views.ListActivityView.as_view(), name='list'),
     path('<int:pk>/', include([
-        path('edit/', views.edit_activity, name='edit'),
-        path('delete/', views.delete_activity, name='delete'),
+        path('edit/', views.EditActivityView.as_view(), name='edit'),
+        path('delete/', views.DeleteActivityView.as_view(), name='delete'),
     ])),
 ]

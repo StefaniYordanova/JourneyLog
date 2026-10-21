@@ -4,11 +4,11 @@ from destinations import views
 app_name = 'destinations'
 
 urlpatterns = [
-    path('add/', views.add_destination, name='add'),
-    path('list/', views.list_destinations, name='list'),
+    path('add/', views.AddDestinationView.as_view(), name='add'),
+    path('list/', views.ListDestinationView.as_view(), name='list'),
     path('<slug:slug>/', include([
-        path('', views.details_destination, name='details'),
-        path('edit/', views.edit_destination, name='edit'),
-        path('delete/', views.delete_destination, name='delete'),
+        path('', views.DetailDestinationView.as_view(), name='details'),
+        path('edit/', views.EditDestinationView.as_view(), name='edit'),
+        path('delete/', views.DeleteDestinationView.as_view(), name='delete'),
     ])),
 ]

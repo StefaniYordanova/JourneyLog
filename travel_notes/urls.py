@@ -4,11 +4,11 @@ from travel_notes import views
 app_name = 'travel_notes'
 
 urlpatterns = [
-    path('add/', views.add_note, name='add'),
-    path('list/', views.list_notes, name='list'),
+    path('add/', views.AddNoteView.as_view(), name='add'),
+    path('list/', views.ListNoteView.as_view(), name='list'),
     path('<int:pk>/', include([
-        path('', views.details_note, name='details'),
-        path('edit/', views.edit_note, name='edit'),
-        path('delete/', views.delete_note, name='delete'),
+        path('', views.DetailNoteView.as_view(), name='details'),
+        path('edit/', views.EditNoteView.as_view(), name='edit'),
+        path('delete/', views.DeleteNoteView.as_view(), name='delete'),
     ])),
 ]

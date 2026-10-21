@@ -1,74 +1,61 @@
 from django.forms import modelform_factory
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import reverse
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView
+
 from .forms import DestinationCreateForm, DestinationDeleteForm
 from .models import Destination
 
-# Create your views here.
+class AddDestinationView(CreateView):
+    template_name = 'destinations/destination-add-page.html'
+    form_class = DestinationCreateForm
+    success_url = reverse_lazy('destinations:list')
 
-def add_destination(request: HttpRequest) -> HttpResponse:
-    form = DestinationCreateForm(request.POST or None, request.FILES or None)
+    def post(self, request, *args, **kwargs):
+        form = self.get_form_class()(request.POST, request.FILES)
 
-    if form.is_valid():
-        form.save()
-        return redirect('destinations:list')
+        if form.is_valid():
+            return self.form_valid(form)
+        return self.form_invalid(form)
 
-    context = {
-        'form': form,
-    }
 
-    return render(request, 'destinations/destination-add-page.html', context)
+class EditDestinationView(UpdateView):
+    model = Destination
+    template_name = 'destinations/destination-edit-page.html'
 
-def edit_destination(request: HttpRequest, slug: slug) -> HttpResponse:
-    destination = get_object_or_404(Destination, slug=slug)
+    def get_form_class(self):
+        if self.request.user.is_staff:
+            return modelform_factory(Destination, fields="__all__")
+        return modelform_factory(Destination, exclude=["slug", ])
 
-    if request.user.is_staff:
-        DestinationEditForm = modelform_factory(Destination, fields="__all__")
-    else:
-        DestinationEditForm = modelform_factory(Destination, exclude=["slug", ])
+    def get_success_url(self):
+        return reverse('destinations:details', kwargs={'slug': self.object.slug})
 
-    form = DestinationEditForm(request.POST or None, request.FILES or None, instance=destination)
 
-    if form.is_valid():
-        form.save()
-        return redirect('destinations:details', slug=destination.slug)
+class DeleteDestinationView(DeleteView):
+    model = Destination
+    template_name = 'destinations/destination-delete-page.html'
+    success_url = 'destinations:list'
+    form_class = DestinationDeleteForm
 
-    context = {
-        "form": form,
-        "destination": destination,
-    }
+    def get_initial(self) -> dict:
+        return self.object.__dict__
 
-    return render(request, 'destinations/destination-edit-page.html', context)
+    def form_invalid(self, form):
+        return super().form_valid(form)
 
-def delete_destination(request: HttpRequest, slug: slug) -> HttpResponse:
-    destination = get_object_or_404(Destination, slug=slug)
-    form = DestinationDeleteForm(instance=destination)
 
-    if request.method == "POST":
-        destination.delete()
-        return redirect('destinations:list')
+class DetailDestinationView(DetailView):
+    model = Destination
+    template_name = 'destinations/destination-details-page.html'
+    context_object_name = 'destination'
 
-    context = {
-        "form": form,
-        "destination": destination,
-    }
 
-    return render(request, 'destinations/destination-delete-page.html', context)
+class ListDestinationView(ListView):
+    model = Destination
+    template_name = 'destinations/destination-list-page.html'
+    context_object_name = 'destinations'
+    paginate_by = 10
 
-def details_destination(request: HttpRequest, slug: slug) -> HttpResponse:
-    destination = get_object_or_404(Destination, slug=slug)
-
-    context = {
-        "destination": destination,
-    }
-
-    return render(request, 'destinations/destination-details-page.html', context)
-
-def list_destinations(request: HttpRequest) -> HttpResponse:
-    all_destinations = Destination.objects.order_by('-created_at')
-
-    context = {
-        "destinations": all_destinations,
-    }
-
-    return render(request, 'destinations/destination-list-page.html', context)
+    def get_queryset(self):
+        return Destination.objects.order_by('-created_at')

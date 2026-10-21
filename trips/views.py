@@ -1,52 +1,37 @@
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404, reverse
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, UpdateView, DeleteView
 from .forms import TripCreateForm, TripEditForm, TripDeleteForm
 from .models import Trip
 
-# Create your views here.
 
-def add_trip(request: HttpRequest) -> HttpResponse:
-    form = TripCreateForm(request.POST or None)
+class AddTripView(CreateView):
+    template_name = 'trips/trip-add-page.html'
+    form_class = TripCreateForm
+    success_url = reverse_lazy('trips:list')
 
-    if form.is_valid():
-        form.save()
-        return redirect('trips:list')
 
-    context = {
-        "form": form,
-    }
+class EditTripView(UpdateView):
+    model = Trip
+    template_name = 'trips/trip-edit-page.html'
+    form_class = TripEditForm
 
-    return render(request, 'trips/trip-add-page.html', context)
+    def get_success_url(self):
+        return reverse('trips:details', kwargs={'pk': self.object.pk})
 
-def edit_trip(request: HttpRequest, pk: int) -> HttpResponse:
-    trip = get_object_or_404(Trip, pk=pk)
-    form = TripEditForm(request.POST or None, instance=trip)
 
-    if form.is_valid():
-        form.save()
-        return redirect('trips:details', trip.pk)
+class DeleteTripView(DeleteView):
+    model = Trip
+    template_name = 'trips/trip-delete-page.html'
+    form_class = TripDeleteForm
+    success_url = reverse_lazy('trips:list')
 
-    context = {
-        "form": form,
-        "trip": trip,
-    }
+    def get_initial(self) -> dict:
+        return self.object.__dict__
 
-    return render(request, 'trips/trip-edit-page.html', context)
-
-def delete_trip(request: HttpRequest, pk: int) -> HttpResponse:
-    trip = get_object_or_404(Trip, pk=pk)
-    form = TripDeleteForm(instance=trip)
-
-    if request.method == "POST":
-        trip.delete()
-        return redirect('trips:list')
-
-    context = {
-        "form": form,
-        "trip": trip,
-    }
-
-    return render(request, 'trips/trip-delete-page.html', context)
+    def form_invalid(self, form):
+        return super().form_valid(form)
 
 
 def details_trip(request: HttpRequest, pk: int) -> HttpResponse:
