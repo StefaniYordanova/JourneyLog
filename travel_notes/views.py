@@ -1,5 +1,6 @@
-from django.shortcuts import reverse
-from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import reverse, get_object_or_404, render, redirect
+from django.views.generic import CreateView, UpdateView, DetailView, ListView
 from .forms import TravelNoteCreateForm, TravelNoteEditForm, TravelNoteDeleteForm
 from .models import TravelNote
 
@@ -26,19 +27,20 @@ class DetailNoteView(DetailView):
     context_object_name = 'note'
 
 
-class DeleteNoteView(DeleteView):
-    model = TravelNote
-    template_name = 'travel_notes/note-delete-page.html'
-    form_class = TravelNoteDeleteForm
+def delete_note(request: HttpRequest, pk: int) -> HttpResponse:
+    note = get_object_or_404(TravelNote, pk=pk)
+    trip_pk = note.trip.pk
+    form = TravelNoteDeleteForm(instance=note)
 
-    def get_initial(self) -> dict:
-        return self.object.__dict__
+    if request.method == "POST":
+        note.delete()
+        return redirect('trips:details', pk=trip_pk)
 
-    def form_invalid(self, form):
-        return super().form_valid(form)
+    context = {
+        "form": form,
+    }
 
-    def get_success_url(self):
-        return reverse('trips:details', kwargs={'pk': self.object.trip.pk})
+    return render(request, 'travel_notes/note-delete-page.html', context)
 
 
 class ListNoteView(ListView):

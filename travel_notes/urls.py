@@ -9,6 +9,6 @@ urlpatterns = [
     path('<int:pk>/', include([
         path('', views.DetailNoteView.as_view(), name='details'),
         path('edit/', views.EditNoteView.as_view(), name='edit'),
-        path('delete/', views.DeleteNoteView.as_view(), name='delete'),
+        path('delete/', views.delete_note, name='delete'),
     ])),
 ]

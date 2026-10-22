@@ -9,6 +9,6 @@ urlpatterns = [
     path('<int:pk>/', include([
         path('', views.details_trip, name='details'),
         path('edit/', views.EditTripView.as_view(), name='edit'),
-        path('delete/', views.DeleteTripView.as_view(), name='delete'),
+        path('delete/', views.delete_trip, name='delete'),
     ])),
 ]

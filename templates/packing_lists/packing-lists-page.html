@@ -22,7 +22,7 @@ All Packing Items | Journeylog
 
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 1rem; margin-bottom: 1.5rem;">
                     <h2 style="color: #c084fc; font-size: 1.5rem; font-weight: 700; margin: 0;">
-                        ✈️ {{ trip.title }}
+                        {{ trip.title }}
                     </h2>
 
                     <a href="{% url 'trips:details' trip.pk %}" style="color: #38bdf8; font-size: 0.85rem; text-decoration: none; font-weight: 600;">

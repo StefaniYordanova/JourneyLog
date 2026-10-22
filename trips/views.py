@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, get_object_or_404, reverse
+from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView
 from .forms import TripCreateForm, TripEditForm, TripDeleteForm
 from .models import Trip
 
@@ -21,17 +21,20 @@ class EditTripView(UpdateView):
         return reverse('trips:details', kwargs={'pk': self.object.pk})
 
 
-class DeleteTripView(DeleteView):
-    model = Trip
-    template_name = 'trips/trip-delete-page.html'
-    form_class = TripDeleteForm
-    success_url = reverse_lazy('trips:list')
+def delete_trip(request: HttpRequest, pk: int) -> HttpResponse:
+    trip = get_object_or_404(Trip, pk=pk)
+    form = TripDeleteForm(instance=trip)
 
-    def get_initial(self) -> dict:
-        return self.object.__dict__
+    if request.method == "POST":
+        trip.delete()
+        return redirect('trips:list')
 
-    def form_invalid(self, form):
-        return super().form_valid(form)
+    context = {
+        "form": form,
+        "trip": trip,
+    }
+
+    return render(request, 'trips/trip-delete-page.html', context)
 
 
 def details_trip(request: HttpRequest, pk: int) -> HttpResponse:

@@ -11,12 +11,12 @@
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
             <span class="section-label" style="background: rgba(192, 132, 252, 0.15); color: #e9d5ff; border: 1px solid rgba(192, 132, 252, 0.3); padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">
-                📝 TRAVEL NOTE
+                TRAVEL NOTE
             </span>
 
             {% if note.trip %}
                 <span style="color: var(--text-muted, #cbd5e1); font-size: 0.9rem;">
-                    ✈️ Trip Title: <strong style="color: #ffffff;">{{ note.trip.title }}</strong>
+                    ✈ Trip Title: <strong style="color: #ffffff;">{{ note.trip.title }}</strong>
                 </span>
             {% endif %}
         </div>

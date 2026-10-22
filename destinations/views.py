@@ -2,7 +2,6 @@ from django.forms import modelform_factory
 from django.shortcuts import reverse
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView
-
 from .forms import DestinationCreateForm, DestinationDeleteForm
 from .models import Destination
 
