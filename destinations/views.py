@@ -1,21 +1,15 @@
+from django.db.models import Q
 from django.forms import modelform_factory
 from django.shortcuts import reverse
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView
-from .forms import DestinationCreateForm, DestinationDeleteForm
+from .forms import DestinationCreateForm, DestinationDeleteForm, SearchDestinationForm
 from .models import Destination
 
 class AddDestinationView(CreateView):
     template_name = 'destinations/destination-add-page.html'
     form_class = DestinationCreateForm
     success_url = reverse_lazy('destinations:list')
-
-    def post(self, request, *args, **kwargs):
-        form = self.get_form_class()(request.POST, request.FILES)
-
-        if form.is_valid():
-            return self.form_valid(form)
-        return self.form_invalid(form)
 
 
 class EditDestinationView(UpdateView):
@@ -34,7 +28,7 @@ class EditDestinationView(UpdateView):
 class DeleteDestinationView(DeleteView):
     model = Destination
     template_name = 'destinations/destination-delete-page.html'
-    success_url = 'destinations:list'
+    success_url = reverse_lazy('destinations:list')
     form_class = DestinationDeleteForm
 
     def get_initial(self) -> dict:
@@ -57,4 +51,21 @@ class ListDestinationView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Destination.objects.order_by('-created_at')
+        queryset = Destination.objects.order_by('-created_at')
+
+        self.search_form = SearchDestinationForm(self.request.GET or None)
+
+        if self.search_form.is_valid():
+            query = self.search_form.cleaned_data.get('query')
+
+            queryset = queryset.filter(
+                Q(name__icontains=query) |
+                Q(country__icontains=query)
+            )
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["search_form"] = self.search_form
+        return context

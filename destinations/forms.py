@@ -3,6 +3,17 @@ from destinations.models import Destination
 from JourneyLog.mixins import DisabledFormFieldsMixin
 
 
+class SearchDestinationForm(forms.Form):
+    query = forms.CharField(
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'search-input-field',
+            'placeholder': 'Search destinations...'
+        })
+    )
+
+
 class BaseDestinationForm(forms.ModelForm):
     class Meta:
         model = Destination

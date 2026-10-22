@@ -3,7 +3,6 @@ from django.db import models
 from django.utils.text import slugify
 from JourneyLog.mixins import CreationTimeStampMixin, NameMixin
 
-# Create your models here.
 
 class Destination(NameMixin, CreationTimeStampMixin):
     country = models.CharField(

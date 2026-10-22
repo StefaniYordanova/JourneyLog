@@ -4,6 +4,18 @@ from trips.models import Trip
 from JourneyLog.mixins import DisabledFormFieldsMixin
 from datetime import date
 
+
+class SearchTripForm(forms.Form):
+    query = forms.CharField(
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'search-input-field',
+            'placeholder': 'Search trips...'
+        })
+    )
+
+
 class BaseTripForm(forms.ModelForm):
     class Meta:
         model = Trip

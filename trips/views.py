@@ -2,8 +2,9 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
-from .forms import TripCreateForm, TripEditForm, TripDeleteForm
+from .forms import TripCreateForm, TripEditForm, TripDeleteForm, SearchTripForm
 from .models import Trip
+from django.db.models import Q
 
 
 class AddTripView(CreateView):
@@ -60,9 +61,26 @@ def list_trip(request: HttpRequest) -> HttpResponse:
         is_completed=True,
     ).order_by('-end_date')
 
+    search_form = SearchTripForm(request.GET or None)
+    searched_trips = None
+
+    if request.GET and search_form.is_valid():
+        query = search_form.cleaned_data['query']
+
+        if query:
+            searched_trips = Trip.objects.select_related(
+                'destination'
+            ).filter(
+                Q(title__icontains=query) |
+                Q(destination__name__icontains=query) |
+                Q(destination__country__icontains=query)
+            )
+
     context = {
         "upcoming_trips": upcoming_trips,
         "completed_trips": completed_trips,
+        "searched_trips": searched_trips,
+        "search_form": search_form,
     }
 
     return render(request, 'trips/trip-list-page.html', context)

@@ -22,24 +22,50 @@
         ">
             My Trips
         </h1>
-        <p style="color: var(--text-muted, #cbd5e1); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+        <p style="color: var(--text-muted, #cbd5e1); font-size: 1.1rem; max-width: 600px; margin: 0 auto 1.75rem auto;">
             Track your upcoming adventures and look back at all the amazing places you've already completed.
         </p>
+
+        <form method="get"
+              action="{% url 'trips:list' %}"
+              style="max-width: 550px; margin: 0 auto;
+                     display: flex; align-items: center; gap: 0.5rem;
+                     background: rgba(15, 23, 42, 0.85);
+                     padding: 0.5rem 0.75rem; border-radius: 50px;
+                     border: 1px solid rgba(255, 255, 255, 0.2);
+                     backdrop-filter: blur(12px);
+                     box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
+
+            <div style="flex-grow: 1; display: flex; align-items: center;">
+                {{ search_form.query }}
+            </div>
+
+            <button type="submit" class="btn"
+                    style="border-radius: 40px; padding: 0.5rem 1.5rem;
+                           font-size: 0.9rem; white-space: nowrap;">
+                Search
+            </button>
+
+            {% if request.GET.query %}
+                <a href="{% url 'trips:list' %}" class="clear-search">
+                    <span class="clear-search-icon">×</span>
+                    <span>Clear</span>
+                </a>
+            {% endif %}
+        </form>
     </div>
 
     <div style="max-width: 900px; margin: 0 auto;">
 
-        <!-- UPCOMING TRIPS SECTION -->
-        <div style="margin-bottom: 4.5rem;">
-            <h2 style="color: #ffffff; font-size: 1.6rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                Upcoming Trips:
-            </h2>
+        {% if searched_trips is not None %}
+            <div style="margin-bottom: 4.5rem;">
+                <h2 style="color: #ffffff; font-size: 1.6rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    Search Results for "{{ request.GET.query }}"
+                </h2>
 
-            {% if upcoming_trips %}
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.8rem;">
-                    {% for trip in upcoming_trips %}
-                        <article class="card" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; transition: transform 0.3s ease, box-shadow 0.3s ease; overflow: hidden; padding: 0;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 25px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1)';">
-
+                    {% for trip in searched_trips %}
+                        <article class="card" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; transition: transform 0.3s ease, box-shadow 0.3s ease; overflow: hidden; padding: 0;">
                             <div style="height: 180px; width: 100%; background: rgba(0, 0, 0, 0.2);">
                                 {% if trip.destination.image_file %}
                                     <img src="{{ trip.destination.image_file.url }}" alt="{{ trip.destination.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
@@ -51,36 +77,21 @@
                             </div>
 
                             <div style="flex-grow: 1; text-align: left; padding: 1.5rem;">
-
                                 <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
                                     {% if trip.destination %}
-                                        <p style="font-size: 1.4rem; font-weight: 700; color: #ffffff; margin: 0; display: flex; align-items: center; gap: 0.35rem;">
+                                        <p style="font-size: 1.4rem; font-weight: 700; color: #ffffff; margin: 0;">
                                             📍 {{ trip.destination.name }}
                                         </p>
-                                    {% else %}
-                                        <div></div>
                                     {% endif %}
-
-                                    <span style="background: rgba(192, 132, 252, 0.15); color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.3); padding: 0.35rem 0.85rem; border-radius: 12px; font-size: 0.85rem; font-weight: 600; white-space: nowrap;">
-                                         {{ trip.start_date|days_left }} days left
-                                    </span>
                                 </div>
-
                                 <h3 style="font-size: 1.15rem; font-weight: 600; margin: 0 0 0.8rem 0; color: #e9d5ff;">
                                     {{ trip.name }}
                                 </h3>
-
                                 <p style="margin-bottom: 0.8rem;">
                                     <span style="background: rgba(192, 132, 252, 0.15); color: #e9d5ff; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">
                                         {{ trip.start_date }} — {{ trip.end_date }}
                                     </span>
                                 </p>
-
-                                {% if trip.description %}
-                                    <p style="color: var(--text-muted, #cbd5e1); line-height: 1.6; font-size: 0.95rem; margin-bottom: 1.5rem;">
-                                        {{ trip.description|truncatewords:5 }}
-                                    </p>
-                                {% endif %}
                             </div>
 
                             <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
@@ -91,72 +102,138 @@
                         </article>
                     {% endfor %}
                 </div>
-            {% else %}
-                <div class="card" style="text-align: center; padding: 2rem;">
-                    <p style="color: var(--text-muted, #cbd5e1); margin: 0;">No upcoming trips planned yet. Time to book a new journey!</p>
-                </div>
-            {% endif %}
-        </div>
+            </div>
+        {% else %}
+        
+            <!-- UPCOMING TRIPS SECTION -->
+            <div style="margin-bottom: 4.5rem;">
+                <h2 style="color: #ffffff; font-size: 1.6rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    Upcoming Trips:
+                </h2>
 
-        <!-- COMPLETED TRIPS SECTION -->
-        <div>
-            <h2 style="color: #ffffff; font-size: 1.6rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                Completed Trips:
-            </h2>
+                {% if upcoming_trips %}
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.8rem;">
+                        {% for trip in upcoming_trips %}
+                            <article class="card" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; transition: transform 0.3s ease, box-shadow 0.3s ease; overflow: hidden; padding: 0;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 25px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1)';">
 
-            {% if completed_trips %}
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.8rem;">
-                    {% for trip in completed_trips %}
-                        <article class="card" style="opacity: 0.85; display: flex; flex-direction: column; justify-content: space-between; height: 100%; transition: transform 0.3s ease, box-shadow 0.3s ease; overflow: hidden; padding: 0;" onmouseover="this.style.opacity='1'; this.style.transform='translateY(-5px)';" onmouseout="this.style.opacity='0.85'; this.style.transform='translateY(0)';">
+                                <div style="height: 180px; width: 100%; background: rgba(0, 0, 0, 0.2);">
+                                    {% if trip.destination.image_file %}
+                                        <img src="{{ trip.destination.image_file.url }}" alt="{{ trip.destination.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                                    {% elif trip.destination.image_url %}
+                                        <img src="{{ trip.destination.image_url }}" alt="{{ trip.destination.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                                    {% else %}
+                                        <img src="https://t4.ftcdn.net/jpg/07/91/22/59/360_F_791225927_caRPPH99D6D1iFonkCRmCGzkJPf36QDw.jpg" alt="Default Trip Cover" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                                    {% endif %}
+                                </div>
 
-                            <div style="height: 180px; width: 100%; background: rgba(0, 0, 0, 0.2);">
-                                {% if trip.destination.image_file %}
-                                    <img src="{{ trip.destination.image_file.url }}" alt="{{ trip.destination.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                                {% elif trip.destination.image_url %}
-                                    <img src="{{ trip.destination.image_url }}" alt="{{ trip.destination.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                                {% else %}
-                                    <img src="https://t4.ftcdn.net/jpg/07/91/22/59/360_F_791225927_caRPPH99D6D1iFonkCRmCGzkJPf36QDw.jpg" alt="Default Trip Cover" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                                {% endif %}
-                            </div>
+                                <div style="flex-grow: 1; text-align: left; padding: 1.5rem;">
 
-                            <div style="flex-grow: 1; text-align: left; padding: 1.5rem;">
-                                {% if trip.destination %}
-                                    <p style="font-size: 1.4rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0; display: flex; align-items: center; gap: 0.35rem;">
-                                        📍 {{ trip.destination.name }}
+                                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                        {% if trip.destination %}
+                                            <p style="font-size: 1.4rem; font-weight: 700; color: #ffffff; margin: 0; display: flex; align-items: center; gap: 0.35rem;">
+                                                📍 {{ trip.destination.name }}
+                                            </p>
+                                        {% else %}
+                                            <div></div>
+                                        {% endif %}
+
+                                        <span style="background: rgba(192, 132, 252, 0.15); color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.3); padding: 0.35rem 0.85rem; border-radius: 12px; font-size: 0.85rem; font-weight: 600; white-space: nowrap;">
+                                             {{ trip.start_date|days_left }} days left
+                                        </span>
+                                    </div>
+
+                                    <h3 style="font-size: 1.15rem; font-weight: 600; margin: 0 0 0.8rem 0; color: #e9d5ff;">
+                                        {{ trip.name }}
+                                    </h3>
+
+                                    <p style="margin-bottom: 0.8rem;">
+                                        <span style="background: rgba(192, 132, 252, 0.15); color: #e9d5ff; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">
+                                            {{ trip.start_date }} — {{ trip.end_date }}
+                                        </span>
                                     </p>
-                                {% endif %}
 
-                                <h3 style="font-size: 1.15rem; font-weight: 600; margin: 0 0 0.8rem 0; color: #e9d5ff;">
-                                    {{ trip.name }}
-                                </h3>
+                                    {% if trip.description %}
+                                        <p style="color: var(--text-muted, #cbd5e1); line-height: 1.6; font-size: 0.95rem; margin-bottom: 1.5rem;">
+                                            {{ trip.description|truncatewords:5 }}
+                                        </p>
+                                    {% endif %}
+                                </div>
 
-                                <p style="margin-bottom: 0.8rem;">
-                                    <span style="background: rgba(255, 255, 255, 0.08); color: #cbd5e1; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">
-                                        Finished: {{ trip.end_date }}
-                                    </span>
-                                </p>
+                                <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+                                    <a href="{% url 'trips:details' trip.pk %}" class="btn" style="width: 100%; text-align: center; box-sizing: border-box; display: inline-block;">
+                                        View Itinerary
+                                    </a>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="card" style="text-align: center; padding: 2rem;">
+                        <p style="color: var(--text-muted, #cbd5e1); margin: 0;">No upcoming trips planned yet. Time to book a new journey!</p>
+                    </div>
+                {% endif %}
+            </div>
 
-                                {% if trip.description %}
-                                    <p style="color: var(--text-muted, #cbd5e1); line-height: 1.6; font-size: 0.95rem; margin-bottom: 1.5rem;">
-                                        {{ trip.description|truncatewords:5 }}
+            <!-- COMPLETED TRIPS SECTION -->
+            <div>
+                <h2 style="color: #ffffff; font-size: 1.6rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    Completed Trips:
+                </h2>
+
+                {% if completed_trips %}
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.8rem;">
+                        {% for trip in completed_trips %}
+                            <article class="card" style="opacity: 0.85; display: flex; flex-direction: column; justify-content: space-between; height: 100%; transition: transform 0.3s ease, box-shadow 0.3s ease; overflow: hidden; padding: 0;" onmouseover="this.style.opacity='1'; this.style.transform='translateY(-5px)';" onmouseout="this.style.opacity='0.85'; this.style.transform='translateY(0)';">
+
+                                <div style="height: 180px; width: 100%; background: rgba(0, 0, 0, 0.2);">
+                                    {% if trip.destination.image_file %}
+                                        <img src="{{ trip.destination.image_file.url }}" alt="{{ trip.destination.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                                    {% elif trip.destination.image_url %}
+                                        <img src="{{ trip.destination.image_url }}" alt="{{ trip.destination.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                                    {% else %}
+                                        <img src="https://t4.ftcdn.net/jpg/07/91/22/59/360_F_791225927_caRPPH99D6D1iFonkCRmCGzkJPf36QDw.jpg" alt="Default Trip Cover" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                                    {% endif %}
+                                </div>
+
+                                <div style="flex-grow: 1; text-align: left; padding: 1.5rem;">
+                                    {% if trip.destination %}
+                                        <p style="font-size: 1.4rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0; display: flex; align-items: center; gap: 0.35rem;">
+                                            📍 {{ trip.destination.name }}
+                                        </p>
+                                    {% endif %}
+
+                                    <h3 style="font-size: 1.15rem; font-weight: 600; margin: 0 0 0.8rem 0; color: #e9d5ff;">
+                                        {{ trip.name }}
+                                    </h3>
+
+                                    <p style="margin-bottom: 0.8rem;">
+                                        <span style="background: rgba(255, 255, 255, 0.08); color: #cbd5e1; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">
+                                            Finished: {{ trip.end_date }}
+                                        </span>
                                     </p>
-                                {% endif %}
-                            </div>
 
-                            <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
-                                <a href="{% url 'trips:details' trip.pk %}" class="btn btn-secondary" style="width: 100%; text-align: center; box-sizing: border-box; display: inline-block;">
-                                    Review Memories
-                                </a>
-                            </div>
-                        </article>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <div class="card" style="text-align: center; padding: 2rem;">
-                    <p style="color: var(--text-muted, #cbd5e1); margin: 0;">No completed trips recorded yet.</p>
-                </div>
-            {% endif %}
-        </div>
+                                    {% if trip.description %}
+                                        <p style="color: var(--text-muted, #cbd5e1); line-height: 1.6; font-size: 0.95rem; margin-bottom: 1.5rem;">
+                                            {{ trip.description|truncatewords:5 }}
+                                        </p>
+                                    {% endif %}
+                                </div>
+
+                                <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+                                    <a href="{% url 'trips:details' trip.pk %}" class="btn btn-secondary" style="width: 100%; text-align: center; box-sizing: border-box; display: inline-block;">
+                                        Review Memories
+                                    </a>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="card" style="text-align: center; padding: 2rem;">
+                        <p style="color: var(--text-muted, #cbd5e1); margin: 0;">No completed trips recorded yet.</p>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
 
     </div>
 </section>
