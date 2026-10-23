@@ -7,12 +7,12 @@ JourneyLog is a Django web application designed for passionate travelers who lov
 
 ## Table of Contents
 
-- [Overview](#-overview)
-- [Features](#-features)
-- [How It Works](#-how-it-works)
-- [Tech Stack](#-tech-stack)
-- [Installation](#-installation)
-- [Author](#-author)
+- [Overview](#overview)
+- [Features](#features)
+- [How It Works](#how-it-works)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Author](#author)
 
 ## Overview
 
@@ -80,7 +80,7 @@ Keep useful information, ideas, and reminders together with your travel plans.
 
 Make a list of the things you need to bring so you can prepare for departure with greater confidence.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 JourneyLog is built using the following technologies:
 
@@ -90,7 +90,7 @@ JourneyLog is built using the following technologies:
 - **CSS3** — styling and responsive visual design.
 - **Git and GitHub** — version control and source code management.
 
-## ⚙️ Installation
+## Installation
 
 Follow these steps to set up JourneyLog locally.
 
@@ -152,7 +152,7 @@ python manage.py runserver
 
 Open the following address in your browser: http://127.0.0.1:8000/
 
-## 👩‍💻 Author
+## Author
 
 **Stefani Yordanova** 
 
