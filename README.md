@@ -12,6 +12,7 @@ JourneyLog is a Django web application designed for passionate travelers who lov
 - [How It Works](#how-it-works)
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
+- [Usage](#usage)
 - [Author](#author)
 
 ## Overview
@@ -88,6 +89,7 @@ JourneyLog is built using the following technologies:
 - **Django** — web framework, request handling, views, forms, and database interaction.
 - **HTML5** — page structure and templates.
 - **CSS3** — styling and responsive visual design.
+- **SQLite** — database for local development
 - **Git and GitHub** — version control and source code management.
 
 ## Installation
@@ -151,6 +153,57 @@ python manage.py runserver
 ```
 
 Open the following address in your browser: http://127.0.0.1:8000/
+
+## Usage
+
+After starting the development server and opening JourneyLog in your browser, follow these steps to organize your next adventure!
+
+### 1. Explore the Home Page
+
+Once you open the application, you will see the home page, where you can start exploring JourneyLog and access its main features through the navigation bar.
+
+<img width="1300" height="700" alt="home_page" src="https://github.com/user-attachments/assets/0225f922-9fad-4693-8342-aee3156cc643" />
+
+### 2. Add a Destination
+
+Start by adding a destination you would like to visit. Enter the required information about the place and save it to your destinations collection.
+
+<img width="1300" height="700" alt="add_destination" src="https://github.com/user-attachments/assets/355ce4bf-5a85-4106-b5f6-c341ac50eb57" />
+
+### 3. Create a Trip
+
+After adding a destination, create a trip associated with that destination. Add the relevant trip details to organize your travel plans.
+
+<img width="1300" height="700" alt="add_trip" src="https://github.com/user-attachments/assets/29822bc7-ad34-4509-ac97-757f3a6bc768" />
+
+### 4. Plan Your Activities
+
+Add activities to your trip to keep track of the things you want to do and the places you want to explore during your journey.
+
+<img width="1300" height="560" alt="add_activity" src="https://github.com/user-attachments/assets/ca079504-959b-4be6-80fd-5c64a45dea9b" />
+<img width="1300" height="775" alt="add_form_activity" src="https://github.com/user-attachments/assets/cadce7c2-6031-462f-b417-930cf4a9c9bc" />
+
+### 5. Add Travel Notes
+
+Write down important information, useful reminders, and ideas you want to remember before or during your trip.
+
+<img width="1300" height="622" alt="travel_notes" src="https://github.com/user-attachments/assets/d5b7a04d-71ad-44af-aeb9-b204cedbfa72" />
+
+### 6. Create a Packing List
+
+Navigate to your trip's details page and add packing list items to keep track of everything you need to bring on your journey. There you can also add your travel notes and activities.
+
+<img width="1372" height="798" alt="Screenshot 2026-10-23 at 20 54 27" src="https://github.com/user-attachments/assets/620b3d0a-0751-40c4-842b-bc9e662ade23" />
+
+<img width="1405" height="745" alt="Screenshot 2026-10-23 at 20 55 42" src="https://github.com/user-attachments/assets/831dbd0e-77b8-491f-b962-e4b940fb8e90" />
+
+<img width="1239" height="770" alt="add_item" src="https://github.com/user-attachments/assets/7573b3bc-f875-4233-8127-41bc4b5838e2" />
+
+### 7. Manage Your Travel Plans
+
+Return to your destinations and trips whenever you need to review their details, update your plans, or keep your travel information organized in one place.
+
+<img width="1392" height="791" alt="Screenshot 2026-10-23 at 21 03 20" src="https://github.com/user-attachments/assets/e319d857-c925-45ac-9a78-8b3f06bcda60" />
 
 ## Author
 
