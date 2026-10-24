@@ -168,26 +168,27 @@ Once you open the application, you will see the home page, where you can start e
 
 Start by adding a destination you would like to visit. Enter the required information about the place and save it to your destinations collection.
 
-<img width="1300" height="700" alt="add_destination" src="https://github.com/user-attachments/assets/355ce4bf-5a85-4106-b5f6-c341ac50eb57" />
+<img width="1182" height="635" alt="add_destination" src="https://github.com/user-attachments/assets/ddd4890c-420e-4585-a63c-f4317bbed48a" />
 
 ### 3. Create a Trip
 
 After adding a destination, create a trip associated with that destination. Add the relevant trip details to organize your travel plans.
 
-<img width="1300" height="700" alt="add_trip" src="https://github.com/user-attachments/assets/29822bc7-ad34-4509-ac97-757f3a6bc768" />
+<img width="1174" height="638" alt="add_trip" src="https://github.com/user-attachments/assets/6a6c9eb8-fd45-457e-a0f5-0bb1b7123bd8" />
 
 ### 4. Plan Your Activities
 
 Add activities to your trip to keep track of the things you want to do and the places you want to explore during your journey.
 
-<img width="1300" height="560" alt="add_activity" src="https://github.com/user-attachments/assets/ca079504-959b-4be6-80fd-5c64a45dea9b" />
+<img width="1180" height="506" alt="add_activity" src="https://github.com/user-attachments/assets/b4e9eeb3-f087-4dea-a714-d4c6ce9ef3b4" />
+
 <img width="1300" height="775" alt="add_form_activity" src="https://github.com/user-attachments/assets/cadce7c2-6031-462f-b417-930cf4a9c9bc" />
 
 ### 5. Add Travel Notes
 
 Write down important information, useful reminders, and ideas you want to remember before or during your trip.
 
-<img width="1300" height="622" alt="travel_notes" src="https://github.com/user-attachments/assets/d5b7a04d-71ad-44af-aeb9-b204cedbfa72" />
+<img width="1178" height="545" alt="add_note" src="https://github.com/user-attachments/assets/f82a07cc-018e-4d57-82c1-0d9c95ecea2f" />
 
 ### 6. Create a Packing List
 
