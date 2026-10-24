@@ -48,7 +48,7 @@ class ListDestinationView(ListView):
     model = Destination
     template_name = 'destinations/destination-list-page.html'
     context_object_name = 'destinations'
-    paginate_by = 10
+    paginate_by = 6
 
     def get_queryset(self):
         queryset = Destination.objects.order_by('-created_at')

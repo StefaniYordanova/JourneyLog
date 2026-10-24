@@ -4,7 +4,6 @@ from .forms import PackingItemCreateForm
 from trips.models import Trip
 from .models import PackingItem
 
-# Create your views here.
 
 def add_item(request: HttpRequest, trip_pk) -> HttpResponse:
     form = PackingItemCreateForm(request.POST or None)

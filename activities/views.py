@@ -43,7 +43,6 @@ class ListActivityView(ListView):
     model = Activity
     template_name = 'activities/activity-list-page.html'
     context_object_name = 'activities'
-    paginate_by = 10
 
     def get_queryset(self):
         return Activity.objects.select_related('trip').order_by('-trip__start_date')

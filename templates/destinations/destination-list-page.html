@@ -110,6 +110,47 @@
         {% endif %}
     </div>
 
+    {% if is_paginated %}
+        <div style="display: flex; justify-content: center; align-items: center; gap: 0.4rem; margin-top: 3.5rem; flex-wrap: wrap;">
+
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}"
+                   style="display: inline-flex; align-items: center; justify-content: center; padding: 0.6rem 1.1rem; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 0.9rem; backdrop-filter: blur(12px); box-shadow: 0 10px 25px rgba(0,0,0,0.3); transition: all 0.2s ease;">
+                    &larr; Prev
+                </a>
+            {% else %}
+                <span style="display: inline-flex; align-items: center; justify-content: center; padding: 0.6rem 1.1rem; background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); color: #475569; border-radius: 12px; font-weight: 600; font-size: 0.9rem; cursor: not-allowed;">
+                    &larr; Previous
+                </span>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 40px; background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); color: #ffffff; border-radius: 12px; font-weight: 700; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4); border: 1px solid rgba(168, 85, 247, 0.5);">
+                        {{ num }}
+                    </span>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a href="?page={{ num }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}"
+                       style="display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 40px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); color: #cbd5e1; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 0.9rem; backdrop-filter: blur(12px); box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
+                        {{ num }}
+                    </a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}"
+                   style="display: inline-flex; align-items: center; justify-content: center; padding: 0.6rem 1.1rem; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 0.9rem; backdrop-filter: blur(12px); box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
+                    Next &rarr;
+                </a>
+            {% else %}
+                <span style="display: inline-flex; align-items: center; justify-content: center; padding: 0.6rem 1.1rem; background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); color: #475569; border-radius: 12px; font-weight: 600; font-size: 0.9rem; cursor: not-allowed;">
+                    Next &rarr;
+                </span>
+            {% endif %}
+
+        </div>
+    {% endif %}
+
 </section>
 
 {% endblock %}
