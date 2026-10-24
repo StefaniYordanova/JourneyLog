@@ -11,6 +11,7 @@ JourneyLog is a Django web application designed for passionate travelers who lov
 - [Features](#features)
 - [How It Works](#how-it-works)
 - [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Author](#author)
@@ -92,6 +93,29 @@ JourneyLog is built using the following technologies:
 - **SQLite** — database for local development
 - **Git and GitHub** — version control and source code management.
 
+## Project Structure
+
+JourneyLog is organized into separate Django apps and supporting directories, keeping the application's functionality structured and maintainable.
+
+- **`activities/`** — Manages activities associated with trips.
+- **`common/`** — Contains the home page and its related functionality.
+- **`destinations/`** — Handles destination management, including creating, browsing, searching, and viewing destination details.
+- **`JourneyLog/`** — Contains the main Django project configuration and settings.
+- **`packing_items/`** — Manages packing list items associated with trips.
+- **`travel_notes/`** — Handles travel notes and reminders related to trips.
+- **`trips/`** — Manages trip creation, trip details, and travel planning.
+- **`media/`** — Stores uploaded media files, such as destination images.
+- **`static/`** — Contains static assets, such as images and CSS for styling.
+- **`templates/`** — Contains HTML templates used to render the application's pages.
+
+### Root Files
+
+- **`manage.py`** — Provides the command-line utility for managing the Django project.
+- **`requirements.txt`** — Lists the Python packages required to run the application.
+- **`.env.example`** — Provides an example of the environment variables needed for configuration.
+- **`.gitignore`** — Specifies files and directories Git should ignore.
+- **`db.sqlite3`** — The SQLite database used for local development.
+
 ## Installation
 
 Follow these steps to set up JourneyLog locally.
@@ -140,13 +164,25 @@ On Windows, use:
 pip install -r requirements.txt
 ```
 
-### 4. Apply database migrations
+### 4. Configure Environment Variables
+
+Create a `.env` file in the project root by copying `.env.example`:
+
+```bash
+cp .env.example .env
+```
+
+Open `.env` and configure the required environment variables according to the values and instructions provided in `.env.example`.
+
+**Important:** Keep your `.env` file private and never commit it to GitHub. Use `.env.example` as a template when setting up the project on another machine.
+
+### 5. Apply database migrations
 
 ```bash
 python manage.py migrate
 ```
 
-### 5. Start the development server
+### 6. Start the development server
 
 ```bash
 python manage.py runserver
