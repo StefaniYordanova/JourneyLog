@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4beb3558-e269-4f8c-932f-a0de165560bc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base/head.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/common/home-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/common/home-page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/destinations/destination-details-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/destinations/destination-details-page.html" afterDir="false" />
-    </list>
+    <list default="true" id="4beb3558-e269-4f8c-932f-a0de165560bc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -93,7 +87,7 @@
       <workItem from="1792587107266" duration="15190000" />
       <workItem from="1792676173315" duration="10879000" />
       <workItem from="1792765045312" duration="5782000" />
-      <workItem from="1792831858552" duration="1080000" />
+      <workItem from="1792831858552" duration="1571000" />
     </task>
     <servers />
   </component>
