@@ -22,6 +22,7 @@ class Destination(NameMixin, CreationTimeStampMixin):
         null=True,
     )
     slug = models.SlugField(
+        unique=True,
         max_length=100,
         blank=True,
     )

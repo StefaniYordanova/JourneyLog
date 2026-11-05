@@ -12,7 +12,8 @@ class AddTripView(CreateView):
     form_class = TripCreateForm
     success_url = reverse_lazy('trips:list')
 
-
+    # TODO: промяната на датите на пътуване не проверява дали свързаните
+    #  дейности остават в допустимия период !!!
 class EditTripView(UpdateView):
     model = Trip
     template_name = 'trips/trip-edit-page.html'

@@ -3,10 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="4beb3558-e269-4f8c-932f-a0de165560bc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/activities/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/activities/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/destinations/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/destinations/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/destinations/destination-list-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/destinations/destination-list-page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/destinations/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/destinations/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/journeylog_styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/trips/trip-details-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/trips/trip-details-page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/trips/trip-edit-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/trips/trip-edit-page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/trips/trip-list-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/trips/trip-list-page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trips/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/trips/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trips/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/trips/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +97,8 @@
       <workItem from="1792587107266" duration="15190000" />
       <workItem from="1792676173315" duration="10879000" />
       <workItem from="1792765045312" duration="5782000" />
-      <workItem from="1792831858552" duration="2972000" />
+      <workItem from="1792831858552" duration="4649000" />
+      <workItem from="1793893160870" duration="4171000" />
     </task>
     <servers />
   </component>

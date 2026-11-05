@@ -1,8 +1,11 @@
+from datetime import date
+
 from django import forms
 from django.core.exceptions import ValidationError
-from trips.models import Trip
+from django.db.models import Model
+
 from JourneyLog.mixins import DisabledFormFieldsMixin
-from datetime import date
+from trips.models import Trip
 
 
 class SearchTripForm(forms.Form):
@@ -46,6 +49,7 @@ class BaseTripForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         completed = cleaned_data.get('is_completed')
+        # trip_start_date = cleaned_data.get('start_date')
         trip_end_date = cleaned_data.get('end_date')
         current_date = date.today()
 
@@ -53,6 +57,20 @@ class BaseTripForm(forms.ModelForm):
             raise ValidationError({
                 "is_completed": "Trip cannot be completed until it's finished!",
             })
+
+        # TODO: промяната на датите на пътуване не проверява дали свързаните
+        #  дейности остават в допустимия период !!!
+        # activities = cleaned_data.get('activities')
+        #
+        # if activities and trip_start_date and trip_end_date:
+        #     for activity in activities:
+        #         if not (trip_start_date <= activity.date_and_time.date() <= trip_end_date):
+        #             activity.delete()
+        #             raise ValidationError({
+        #                 f"All activities must be between the trip's start and end date - ({trip_start_date}-{trip_end_date})!",
+        #             })
+
+        return cleaned_data
 
 
 class TripCreateForm(BaseTripForm):

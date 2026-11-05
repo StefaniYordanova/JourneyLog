@@ -32,10 +32,6 @@
             ✈ TRIP ITINERARY
         </span>
 
-        <h1 style="font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 800; color: #ffffff; margin-bottom: 0.3rem; line-height: 1.1;">
-            {{ trip.name }}
-        </h1>
-
         {% if trip.destination %}
             <p style="margin-bottom: 0.75rem; color: #e9d5ff; font-weight: 600; font-size: 1.05rem;">
                 📍 Destination: <span style="color: #ffffff;">{{ trip.destination.name }}</span> ({{ trip.destination.country }})
