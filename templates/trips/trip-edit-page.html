@@ -6,33 +6,67 @@
 
 {% block content %}
 
-<section class="form-page trip-form-page">
-    <div class="form-container trip-form-container">
-        <div class="form-header trip-form-header">
+<section class="form-page trip-form-page" style="padding: 3rem 1rem;">
+    <div class="form-container trip-form-container" style="max-width: 650px; margin: 0 auto; background: rgba(15, 23, 42, 0.85); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.15); backdrop-filter: blur(16px); box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
 
-            <span class="section-label">
+        <div class="form-header trip-form-header" style="text-align: center; margin-bottom: 2rem;">
+            <span class="section-label" style="color: #c084fc; font-weight: 600; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase;">
                  UPDATE ITINERARY
             </span>
-
-            <h1>Edit Trip</h1>
-
-            <p>
+            <h1 style="color: #ffffff; font-size: 2.2rem; font-weight: 800; margin: 0.5rem 0;">Edit Trip</h1>
+            <p style="color: #cbd5e1; font-size: 1rem;">
                 Modify your travel dates, update destination details, or change your itinerary schedule.
             </p>
-
         </div>
 
         <form method="post" class="styled-form trip-form">
             {% csrf_token %}
-            
-            {{ form.as_p }}
 
-            <div class="form-actions trip-form-actions" style="margin-top: 2rem;">
-                <button type="submit" class="btn btn-primary" style="flex: 1; text-align: center;">
+            {% if form.non_field_errors %}
+                <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; color: #fca5a5; font-size: 0.95rem; line-height: 1.5;">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                {% for field in form %}
+                    {% if field.name != 'confirm_date_change' %}
+                        <div class="form-field-wrapper">
+                            <label for="{{ field.id_for_label }}" style="display: block; color: #e2e8f0; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.9rem;">
+                                {{ field.label }}
+                            </label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small style="color: #94a3b8; font-size: 0.8rem; display: block; margin-top: 0.25rem;">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div style="color: #f87171; font-size: 0.85rem; margin-top: 0.3rem;">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            {% if form.show_confirmation %}
+                <div style="margin-top: 1.5rem; padding: 1.25rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 14px; animation: fadeIn 0.3s ease;">
+                    <div style="display: flex; align-items: flex-start; gap: 0.85rem;">
+                        {{ form.confirm_date_change }}
+                        <label for="{{ form.confirm_date_change.id_for_label }}" style="color: #fca5a5; font-size: 0.95rem; font-weight: 500; cursor: pointer; line-height: 1.4;">
+                            {{ form.confirm_date_change.label }}
+                        </label>
+                    </div>
+                    {% for error in form.confirm_date_change.errors %}
+                        <div style="color: #f87171; font-size: 0.85rem; margin-top: 0.5rem; margin-left: 1.8rem;">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="form-actions trip-form-actions" style="margin-top: 2.5rem; display: flex; gap: 1rem;">
+                <button type="submit" class="btn btn-primary" style="flex: 1; text-align: center; padding: 0.75rem; border-radius: 12px; font-weight: 600;">
                     Save Changes
                 </button>
 
-                <a href="{% url 'trips:details' object.pk %}" class="btn btn-outline" style="flex: 1; text-align: center;">
+                <a href="{% url 'trips:details' object.pk %}" class="btn btn-outline" style="flex: 1; text-align: center; padding: 0.75rem; border-radius: 12px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
                     Cancel
                 </a>
             </div>

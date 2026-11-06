@@ -12,8 +12,7 @@ class AddTripView(CreateView):
     form_class = TripCreateForm
     success_url = reverse_lazy('trips:list')
 
-    # TODO: промяната на датите на пътуване не проверява дали свързаните
-    #  дейности остават в допустимия период !!!
+
 class EditTripView(UpdateView):
     model = Trip
     template_name = 'trips/trip-edit-page.html'
@@ -21,6 +20,12 @@ class EditTripView(UpdateView):
 
     def get_success_url(self):
         return reverse('trips:details', kwargs={'pk': self.object.pk})
+
+    def form_valid(self, form):
+        if hasattr(form, 'out_of_bounds_activities'):
+            form.out_of_bounds_activities.delete()
+
+        return super().form_valid(form)
 
 
 def delete_trip(request: HttpRequest, pk: int) -> HttpResponse:
