@@ -18,11 +18,6 @@ class SearchTripForm(forms.Form):
 
 
 class BaseTripForm(forms.ModelForm):
-    confirm_date_change = forms.BooleanField(
-        required=False,
-        label="I understand that changing these dates will permanently delete activities falling outside the new range."
-    )
-
     class Meta:
         model = Trip
         fields = "__all__"
@@ -97,6 +92,11 @@ class TripCreateForm(BaseTripForm):
 
 
 class TripEditForm(BaseTripForm):
+    confirm_date_change = forms.BooleanField(
+        required=False,
+        label="I understand that changing these dates will permanently delete activities falling outside the new range."
+    )
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
