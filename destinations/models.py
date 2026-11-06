@@ -5,6 +5,11 @@ from JourneyLog.mixins import CreationTimeStampMixin, NameMixin
 
 
 class Destination(NameMixin, CreationTimeStampMixin):
+    user = models.ForeignKey(
+        to='accounts.CustomUserModel',
+        on_delete=models.CASCADE,
+        related_name='destinations',
+    )
     country = models.CharField(
         max_length=30,
     )
