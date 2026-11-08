@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 import os
 from pathlib import Path
 
+from django.conf.global_settings import LOGIN_URL, LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -123,6 +124,10 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'common:home'
+LOGOUT_REDIRECT_URL = 'common:home'
 
 
 # Static files (CSS, JavaScript, Images)
