@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% load static %}
 
 {% block title %}
     My Profile | JourneyLog
@@ -8,11 +9,16 @@
 
 <section class="form-page profile-page" style="padding: 3rem 1rem;">
     <div class="form-container profile-container" style="max-width: 600px; margin: 0 auto; background: rgba(15, 23, 42, 0.85); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.15); backdrop-filter: blur(16px); box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
-        
+
         <div class="profile-header" style="text-align: center; margin-bottom: 2rem;">
-            <div style="width: 80px; height: 80px; background: #c084fc; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto; color: #0f172a;">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <div style="width: 90px; height: 90px; border-radius: 50%; overflow: hidden; margin: 0 auto 1rem auto; border: 2px solid #c084fc; box-shadow: 0 4px 12px rgba(192, 132, 252, 0.3); background: #1e293b; display: flex; align-items: center; justify-content: center;">
+                {% if object.profile_picture %}
+                    <img src="{{ object.profile.profile_picture.url }}" alt="{{ object.username }}'s Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                {% else %}
+                    <img src="{% static 'images/default_avatar_picture.png' %}" alt="Default Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                {% endif %}
             </div>
+
             <span class="section-label" style="color: #c084fc; font-weight: 600; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase;">
                  USER ACCOUNT
             </span>
