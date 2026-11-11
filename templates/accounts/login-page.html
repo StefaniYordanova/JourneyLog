@@ -14,7 +14,7 @@
                  WELCOME BACK
             </span>
             <h1 style="color: #ffffff; font-size: 2.2rem; font-weight: 800; margin: 0.5rem 0;">Log In to JourneyLog</h1>
-            
+
         </div>
 
         <form method="post" class="styled-form auth-form">
@@ -37,6 +37,15 @@
                             {% endif %}
                         </label>
                         {{ field }}
+
+                        {% if forloop.last %}
+                            <div style="text-align: right; margin-top: 0.35rem;">
+                                <a href="{% url 'accounts:password_reset' %}" style="color: #94a3b8; font-size: 0.85rem; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#c084fc'" onmouseout="this.style.color='#94a3b8'">
+                                    Forgot your password?
+                                </a>
+                            </div>
+                        {% endif %}
+
                         {% if field.help_text %}
                             <small style="color: #94a3b8; font-size: 0.8rem; display: block; margin-top: 0.25rem;">{{ field.help_text }}</small>
                         {% endif %}
@@ -47,7 +56,7 @@
                 {% endfor %}
             </div>
 
-            <div class="form-actions auth-form-actions" style="margin-top: 2.5rem;">
+            <div class="form-actions auth-form-actions" style="margin-top: 2rem;">
                 <button type="submit" class="btn btn-primary" style="width: 100%; text-align: center; padding: 0.75rem; border-radius: 12px; font-weight: 600; cursor: pointer;">
                     Log In
                 </button>

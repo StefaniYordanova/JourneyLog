@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
-from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, \
-    PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.urls import reverse_lazy
 
 app_name = 'accounts'
@@ -21,11 +20,34 @@ urlpatterns = [
 
 
     # Change of password when we have forgotten it:
-    # TODO: add the functionality for sending an email -> Mailjet?
-    path('password-reset/', PasswordResetView.as_view(), name='password_reset'),
-    path('password-reset/done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
-
-    path('password-reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirmed'),
-    path('reset/done/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
-    
+    path(
+        'password-reset/',
+        PasswordResetView.as_view(
+            template_name='accounts/password-reset-page.html',
+            success_url=reverse_lazy('accounts:password_reset_done')
+        ),
+        name='password_reset'
+    ),
+    path(
+        'password-reset/done/',
+        PasswordResetDoneView.as_view(
+            template_name='accounts/password-reset-done-page.html'
+        ),
+        name='password_reset_done'
+    ),
+    path(
+        'password-reset/confirm/<uidb64>/<token>/',
+        PasswordResetConfirmView.as_view(
+            template_name='accounts/password-reset-confirm-page.html',
+            success_url=reverse_lazy('accounts:password_reset_complete')
+        ),
+        name='password_reset_confirm'
+    ),
+    path(
+        'reset/done/',
+        PasswordResetCompleteView.as_view(
+            template_name='accounts/password-reset-complete-page.html'
+        ),
+        name='password_reset_complete'
+    ),
 ]
