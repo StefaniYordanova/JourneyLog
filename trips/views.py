@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.urls import reverse_lazy
@@ -7,10 +9,15 @@ from .models import Trip
 from django.db.models import Q
 
 
-class AddTripView(CreateView):
+class AddTripView(LoginRequiredMixin, CreateView):
     template_name = 'trips/trip-add-page.html'
     form_class = TripCreateForm
     success_url = reverse_lazy('trips:list')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
 
 class EditTripView(UpdateView):
@@ -58,12 +65,15 @@ def details_trip(request: HttpRequest, pk: int) -> HttpResponse:
 
     return render(request, 'trips/trip-details-page.html', context)
 
+@login_required
 def list_trip(request: HttpRequest) -> HttpResponse:
     upcoming_trips = Trip.objects.select_related('destination').filter(
+        destination__user=request.user,
         is_completed=False,
     ).order_by('start_date')
 
     completed_trips = Trip.objects.select_related('destination').filter(
+        destination__user=request.user,
         is_completed=True,
     ).order_by('-end_date')
 

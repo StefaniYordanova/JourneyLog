@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.forms import modelform_factory
 from django.shortcuts import reverse
@@ -6,10 +7,15 @@ from django.views.generic import CreateView, UpdateView, DeleteView, DetailView,
 from .forms import DestinationCreateForm, DestinationDeleteForm, SearchDestinationForm
 from .models import Destination
 
-class AddDestinationView(CreateView):
+class AddDestinationView(LoginRequiredMixin, CreateView):
     template_name = 'destinations/destination-add-page.html'
     form_class = DestinationCreateForm
     success_url = reverse_lazy('destinations:list')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
 
 class EditDestinationView(UpdateView):
@@ -19,7 +25,7 @@ class EditDestinationView(UpdateView):
     def get_form_class(self):
         if self.request.user.is_staff:
             return modelform_factory(Destination, fields="__all__")
-        return modelform_factory(Destination, exclude=["slug", ])
+        return modelform_factory(Destination, exclude=["slug", "user", ])
 
     def get_success_url(self):
         return reverse('destinations:details', kwargs={'slug': self.object.slug})
@@ -44,14 +50,16 @@ class DetailDestinationView(DetailView):
     context_object_name = 'destination'
 
 
-class ListDestinationView(ListView):
+class ListDestinationView(LoginRequiredMixin, ListView):
     model = Destination
     template_name = 'destinations/destination-list-page.html'
     context_object_name = 'destinations'
     paginate_by = 6
 
     def get_queryset(self):
-        queryset = Destination.objects.order_by('-created_at')
+        queryset = Destination.objects.filter(
+            user=self.request.user,
+        ).order_by('-created_at')
 
         self.search_form = SearchDestinationForm(self.request.GET or None)
 

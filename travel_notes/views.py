@@ -1,12 +1,18 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import reverse, get_object_or_404, render, redirect
 from django.views.generic import CreateView, UpdateView, DetailView, ListView
 from .forms import TravelNoteCreateForm, TravelNoteEditForm, TravelNoteDeleteForm
 from .models import TravelNote
 
-class AddNoteView(CreateView):
+class AddNoteView(LoginRequiredMixin, CreateView):
     template_name = 'travel_notes/note-add-page.html'
     form_class = TravelNoteCreateForm
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def get_success_url(self):
         return reverse('trips:details', kwargs={'pk': self.object.trip.pk})
@@ -43,10 +49,12 @@ def delete_note(request: HttpRequest, pk: int) -> HttpResponse:
     return render(request, 'travel_notes/note-delete-page.html', context)
 
 
-class ListNoteView(ListView):
+class ListNoteView(LoginRequiredMixin, ListView):
     model = TravelNote
     template_name = 'travel_notes/note-list-page.html'
     context_object_name = 'notes'
 
     def get_queryset(self):
-        return TravelNote.objects.select_related('trip').order_by('-trip__start_date')
+        return TravelNote.objects.select_related('trip').filter(
+            trip__destination__user=self.request.user,
+        ).order_by('-trip__start_date')

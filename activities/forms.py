@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from datetime import date
 from .models import Activity
 from JourneyLog.mixins import DisabledFormFieldsMixin
+from trips.models import Trip
 
 
 class BaseActivityForm(forms.ModelForm):
@@ -11,15 +12,24 @@ class BaseActivityForm(forms.ModelForm):
         fields = "__all__"
         widgets = {
             "title": forms.TextInput(
-                attrs={"placeholder": "Enter title..."}
+                attrs={"placeholder": "Enter title...", }
             ),
             "date_and_time": forms.DateTimeInput(
                 attrs={"type": "datetime-local", "class": "form-control",  }
             ),
             "location": forms.TextInput(
-                attrs={"placeholder": "Enter location..."}
+                attrs={"placeholder": "Enter location...", }
             ),
         }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+        if user is not None:
+            self.fields['trip'].queryset = Trip.objects.filter(
+                destination__user=user,
+            )
 
     def clean(self):
         cleaned_data = super().clean()

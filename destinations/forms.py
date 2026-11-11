@@ -17,7 +17,7 @@ class SearchDestinationForm(forms.Form):
 class BaseDestinationForm(forms.ModelForm):
     class Meta:
         model = Destination
-        exclude = ['slug', ]
+        exclude = ['slug', 'user'] # excluding the user so that they won't be able to choose and add destinations to other users and see them
         widgets = {
             "name": forms.TextInput(
                 attrs={"placeholder": "Enter name...",}
@@ -29,6 +29,21 @@ class BaseDestinationForm(forms.ModelForm):
                 attrs={"placeholder": "Add description (optional)...", }
             )
         }
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit = True):
+        destination = super().save(commit=False)
+
+        if self.user is not None:
+            destination.user = self.user
+        if commit:
+            destination.save()
+
+        return destination
+
 
 class DestinationCreateForm(BaseDestinationForm):
     ...

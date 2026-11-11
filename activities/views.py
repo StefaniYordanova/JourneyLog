@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.views.generic import CreateView, UpdateView, ListView
@@ -5,9 +6,15 @@ from .forms import ActivityCreateForm, ActivityEditForm, ActivityDeleteForm
 from .models import Activity
 
 
-class AddActivityView(CreateView):
+class AddActivityView(LoginRequiredMixin, CreateView):
     template_name = 'activities/activity-add-page.html'
     form_class = ActivityCreateForm
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+
+        return kwargs
 
     def get_success_url(self):
         return reverse('trips:details', kwargs={'pk': self.object.trip.pk})
@@ -39,10 +46,12 @@ def delete_activity(request: HttpRequest, pk: int) -> HttpResponse:
     return render(request, 'activities/activity-delete-page.html', context)
 
 
-class ListActivityView(ListView):
+class ListActivityView(LoginRequiredMixin, ListView):
     model = Activity
     template_name = 'activities/activity-list-page.html'
     context_object_name = 'activities'
 
     def get_queryset(self):
-        return Activity.objects.select_related('trip').order_by('-trip__start_date')
+        return Activity.objects.select_related('trip').filter(
+            trip__destination__user=self.request.user,
+        ).order_by('-trip__start_date')

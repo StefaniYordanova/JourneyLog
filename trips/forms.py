@@ -3,6 +3,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from JourneyLog.mixins import DisabledFormFieldsMixin
+from destinations.models import Destination
 from trips.models import Trip
 
 
@@ -45,8 +46,14 @@ class BaseTripForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
         self.show_confirmation = False
+
+        if user is not None:
+            self.fields['destination'].queryset = Destination.objects.filter(
+                user=user,
+            )
 
     """
     This clean() method performs two key validations:
