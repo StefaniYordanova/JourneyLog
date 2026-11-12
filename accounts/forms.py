@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
 from .models import Profile
 
@@ -31,3 +31,11 @@ class CustomUserCreationForm(UserCreationForm):
             profile.save()
 
         return user
+
+class CustomUpdateUserInfoForm(UserChangeForm):
+    password = None
+
+    class Meta(UserChangeForm.Meta):
+        model = UserModel
+        fields = ("first_name", "last_name", "username",
+                  "email", "phone_number")

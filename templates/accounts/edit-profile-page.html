@@ -1,0 +1,69 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+    Edit Profile | JourneyLog
+{% endblock %}
+
+{% block content %}
+<section class="form-page auth-form-page" style="padding: 3rem 1rem;">
+    <div class="form-container auth-form-container" style="max-width: 600px; margin: 0 auto; background: rgba(15, 23, 42, 0.85); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.15); backdrop-filter: blur(16px); box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+
+        <!-- Header -->
+        <div class="form-header auth-form-header" style="text-align: center; margin-bottom: 2rem;">
+            <span class="section-label" style="color: #c084fc; font-weight: 600; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase;">
+                 ACCOUNT SETTINGS
+            </span>
+            <h1 style="color: #ffffff; font-size: 2.2rem; font-weight: 800; margin: 0.5rem 0;">Edit Your Profile</h1>
+            <p style="color: #94a3b8; font-size: 0.95rem;">Update your personal details, bio, and profile picture.</p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="styled-form auth-form">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; color: #fca5a5; font-size: 0.95rem; line-height: 1.5;">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                {% for field in form %}
+                    <div class="form-field-wrapper">
+                        <label for="{{ field.id_for_label }}" style="display: block; color: #e2e8f0; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.9rem;">
+                            {{ field.label }}
+                        </label>
+
+                        {{ field }}
+
+                        {% if field.help_text %}
+                            <small style="color: #94a3b8; font-size: 0.8rem; display: block; margin-top: 0.25rem;">{{ field.help_text|safe }}</small>
+                        {% endif %}
+
+                        {% for error in field.errors %}
+                            <div style="color: #f87171; font-size: 0.85rem; margin-top: 0.3rem;">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Change Password Link -->
+            <div style="margin-top: 1.25rem; text-align: right;">
+                <a href="{% url 'accounts:password_change' %}" style="color: #c084fc; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#e879f9'" onmouseout="this.style.color='#c084fc'">
+                    🔒 Change Password &rarr;
+                </a>
+            </div>
+
+            <div class="form-actions auth-form-actions" style="margin-top: 2rem; display: flex; gap: 1rem;">
+                <button type="submit" class="btn btn-primary" style="flex: 1; text-align: center; padding: 0.75rem; border-radius: 12px; font-weight: 600; cursor: pointer; background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; border: none;">
+                    Save Changes
+                </button>
+                <a href="{% url 'accounts:profile-details' %}" class="btn" style="flex: 1; text-align: center; padding: 0.75rem; border-radius: 12px; font-weight: 600; text-decoration: none; background: rgba(255, 255, 255, 0.1); color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.2);">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+</section>
+{% endblock %}
