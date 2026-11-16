@@ -148,11 +148,13 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.mailjet.com'
+EMAIL_HOST = 'in-v3.mailjet.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = 587
-COMPANY_EMAIL = os.getenv('COMPANY_EMAIL')
+
+DEFAULT_FROM_EMAIL = os.getenv('COMPANY_EMAIL')
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration

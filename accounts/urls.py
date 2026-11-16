@@ -21,34 +21,34 @@ urlpatterns = [
 
 
     # Change of password when we have forgotten it:
-    path(
-        'password-reset/',
-        PasswordResetView.as_view(
-            template_name='accounts/password-reset-page.html',
-            success_url=reverse_lazy('accounts:password_reset_done')
-        ),
-        name='password_reset'
-    ),
-    path(
-        'password-reset/done/',
-        PasswordResetDoneView.as_view(
-            template_name='accounts/password-reset-done-page.html'
-        ),
-        name='password_reset_done'
-    ),
-    path(
-        'password-reset/confirm/<uidb64>/<token>/',
-        PasswordResetConfirmView.as_view(
-            template_name='accounts/password-reset-confirm-page.html',
-            success_url=reverse_lazy('accounts:password_reset_complete')
-        ),
-        name='password_reset_confirm'
-    ),
-    path(
-        'reset/done/',
-        PasswordResetCompleteView.as_view(
-            template_name='accounts/password-reset-complete-page.html'
-        ),
-        name='password_reset_complete'
-    ),
+    # path(
+    #     'password-reset/',
+    #     PasswordResetView.as_view(
+    #         template_name='accounts/password-reset-page.html',
+    #         success_url=reverse_lazy('accounts:password_reset_done')
+    #     ),
+    #     name='password_reset'
+    # ),
+    # path(
+    #     'password-reset/done/',
+    #     PasswordResetDoneView.as_view(
+    #         template_name='accounts/password-reset-done-page.html'
+    #     ),
+    #     name='password_reset_done'
+    # ),
+    # path(
+    #     'password-reset/confirm/<uidb64>/<token>/',
+    #     PasswordResetConfirmView.as_view(
+    #         template_name='accounts/password-reset-confirm-page.html',
+    #         success_url=reverse_lazy('accounts:password_reset_complete')
+    #     ),
+    #     name='password_reset_confirm'
+    # ),
+    # path(
+    #     'reset/done/',
+    #     PasswordResetCompleteView.as_view(
+    #         template_name='accounts/password-reset-complete-page.html'
+    #     ),
+    #     name='password_reset_complete'
+    # ),
 ]
