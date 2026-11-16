@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .validators import PhoneNumberValidator
@@ -21,11 +22,10 @@ class Profile(models.Model):
         related_name='profile',
     )
 
-    profile_picture = models.ImageField(
-        upload_to='profile_pictures',
-        null=True,
+    profile_picture = CloudinaryField(
+        'image',
         blank=True,
-        default='',
+        null=True,
     )
 
     date_of_birth = models.DateField()

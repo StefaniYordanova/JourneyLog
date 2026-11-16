@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.text import slugify
@@ -17,8 +18,8 @@ class Destination(NameMixin, CreationTimeStampMixin):
         blank=True,
         null=True,
     )
-    image_file = models.ImageField(
-        upload_to='destination_images/',
+    image_file = CloudinaryField(
+        'image',
         blank=True,
         null=True,
     )
