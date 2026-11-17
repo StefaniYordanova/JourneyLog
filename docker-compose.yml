@@ -12,27 +12,27 @@ services:
       - db
     environment:
       - DEBUG=0
-      - DATABASE_URL=postgres://myprojectuser:secure_password@db:5432/myproject
+      - DATABASE_URL=postgres://postgres:stefi34@db:5432/Journeylog
 
   db:
     image: postgres:16
-    container_name: myproject_db
+    container_name: journeylog_db
     restart: always
     environment:
-      POSTGRES_DB: myproject
-      POSTGRES_USER: myprojectuser
-      POSTGRES_PASSWORD: secure_password
+      POSTGRES_DB: journeylog_2026
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: stefi34
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
   nginx:
     image: nginx:latest
-    container_name: myproject_nginx
+    container_name: journeylog_nginx
     restart: always
     ports:
       - "80:80"
     volumes:
-      - static_volume:/app/static
+      - static_volume:/app/staticfiles
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - web
