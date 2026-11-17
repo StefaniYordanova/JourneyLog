@@ -10,6 +10,8 @@ services:
       - static_volume:/app/staticfiles
     depends_on:
       - db
+    env_file:
+      - .env
     environment:
       - DEBUG=0
       - DATABASE_URL=postgres://postgres:stefi34@db:5432/Journeylog
@@ -19,9 +21,9 @@ services:
     container_name: journeylog_db
     restart: always
     environment:
-      POSTGRES_DB: journeylog_2026
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: stefi34
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
