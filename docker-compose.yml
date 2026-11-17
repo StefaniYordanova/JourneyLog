@@ -1,0 +1,42 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    container_name: journeylog_web
+    restart: always
+    command: gunicorn JourneyLog.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+    depends_on:
+      - db
+    environment:
+      - DEBUG=0
+      - DATABASE_URL=postgres://myprojectuser:secure_password@db:5432/myproject
+
+  db:
+    image: postgres:16
+    container_name: myproject_db
+    restart: always
+    environment:
+      POSTGRES_DB: myproject
+      POSTGRES_USER: myprojectuser
+      POSTGRES_PASSWORD: secure_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  nginx:
+    image: nginx:latest
+    container_name: myproject_nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - static_volume:/app/static
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
+  static_volume:
